@@ -25,24 +25,24 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Restaurants">Restauranten</a></li>
                 <li><a href="/Contact">Taxi's</a></li>
-                <li><a href="~/Dashboard/Dashboard">Dashboard</a></li>
+
                 @*<li style="margin-left:40px"><partial name="~/Pages/Shared/_LoginPartial" /></li>*@
                 @if (WebSecurity.IsAuthenticated)
                 {
-
-                        <li><a class="email" href="~/Account/Manage" title="Manage">@WebSecurity.CurrentUserName</a></li>
-                        <li>
-                            <form id="logoutForm" action="~/Account/Logout" method="post">
-                                @AntiForgery.GetHtml()
-                                <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
-                            </form>
-                        </li>
+                    <li><a href="~/Dashboard/Dashboard">Dashboard</a></li>
+                    <li><a class="email" href="~/Account/Manage" title="Manage">@WebSecurity.CurrentUserName</a></li>
+                    <li>
+                        <form id="logoutForm" action="~/Account/Logout" method="post">
+                            @AntiForgery.GetHtml()
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
+                        </form>
+                    </li>
 
                 }
                 else
                 {
-                        <li><a href="~/Account/Register">Register</a></li>
-                        <li><a href="~/Account/Login">Log in</a></li>
+                    <li><a href="~/Account/Register">Register</a></li>
+                    <li><a href="~/Account/Login">Log in</a></li>
                 }
             </ul>
 
