@@ -4,8 +4,7 @@ using System.Data.SqlClient;
 using WebMatrix.Data;
 
 
-namespace CulinaireTaxi.App_Data.querys
-{
+
     public class RestaurantQuerys : DatabaseInfo
     {
         public void AddRestaurant(string OwnerId, string RestaurantName,string PostalCode,int HouseNumber,string HouseNumberPrefix,string City)
@@ -89,4 +88,4 @@ namespace CulinaireTaxi.App_Data.querys
             db.Close();
         }
     }
-}
+
