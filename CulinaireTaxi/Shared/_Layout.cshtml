@@ -30,7 +30,8 @@
                 @if (WebSecurity.IsAuthenticated)
                 {
                     <li><a href="~/Dashboard/Dashboard">Dashboard</a></li>
-                    <li><a class="email" href="~/Account" title="Manage">@WebSecurity.CurrentUserName</a></li>
+                    <li><a href="~/Manage">Bedrijf beheren</a></li>
+                    <li><a class="email" href="~/Account" title="Profiel">@WebSecurity.CurrentUserName</a></li>
                     <li>
                         <form id="logoutForm" action="~/Account/Logout" method="post">
                             @AntiForgery.GetHtml()

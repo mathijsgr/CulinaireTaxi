@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+}
+
+<main>
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background1.jpg" alt="Unsplashed background img 2"></div>
+    </div>
+
+    <div class="container" style="min-height:600px">
+        <div class="section">
+            <div class="row">
+                <div class="col s12">
+                    <div class="col m3">
+                        <div class="collection">
+                            <a href="~/Manage" class="collection-item ">Reserveringen</a>
+                            <a href="~/Manage/History" class="collection-item">Reserveringen historie</a>
+                            <a href="~/Manage/Details" class="collection-item">Uw bedrijfsgegevens</a>
+                            <a href="~/Manage/Connections" class="collection-item">Gemaakte koppelingen</a>
+                        </div>
+                    </div>
+                    <div class="col m9">
+                        @RenderBody()
+                    </div>                
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background2.jpg" alt="Unsplashed background img 3"></div>
+    </div>
+</main>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
