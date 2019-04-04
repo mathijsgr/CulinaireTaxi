@@ -7,7 +7,7 @@ using WebMatrix.Data;
 
     public class RestaurantQuerys : DatabaseInfo
     {
-        public void AddRestaurant(string OwnerId, string RestaurantName,string PostalCode,int HouseNumber,string HouseNumberPrefix,string City)
+        public void AddRestaurant(int OwnerId, string RestaurantName,string PostalCode,int HouseNumber,string HouseNumberPrefix,string City)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "INSERT INTO Restaurant (OwnerId,RestaurantName,PostalCode,HouseNumber,HouseNumberPrefix,City) "
@@ -24,6 +24,30 @@ using WebMatrix.Data;
             db.Close();
             var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName,row.PostalCode,row.HouseNumber,row.HouseNumberPrefix,row.City);
             return restaurant;
+        }
+
+        public Restaurant GetRestaurantByOwnerId(int Id)
+        {
+            Database db = Database.Open(DatabaseName);
+            string insertCommand = "SELECT * FROM Restaurant WHERE OwnerId = @0";
+            var row = db.QuerySingle(insertCommand, Id);
+            db.Close();
+            if (row == null) return null;
+            else
+            {
+            var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode, row.HouseNumber, row.HouseNumberPrefix, row.City);
+            return restaurant;
+            }   
+        }
+
+        public static bool CheckIfRestaurantExists(int Id)
+        {
+            Database db = Database.Open(DatabaseName);
+            string insertCommand = "SELECT * FROM Restaurant WHERE OwnerId = @0";
+            var row = db.QuerySingle(insertCommand, Id);
+            db.Close();
+            if (row == null) return false;
+            return true;
         }
 
         public List<Restaurant> GetAllRestaurants()
@@ -74,7 +98,7 @@ using WebMatrix.Data;
         public Restaurant EditRestaurant(Restaurant restaurant)
         {
             Database db = Database.Open(DatabaseName);
-            var dbCommand = "UPDATE Restaurant SET (RestaurantName = @1, PostalCode = @2, HouseNumber = @3, HouseNumberPrefix = @4, City = @5) WHERE Id = @0";
+            var dbCommand = "UPDATE Restaurant SET RestaurantName = @1, PostalCode = @2, HouseNumber = @3, HouseNumberPrefix = @4, City = @5 WHERE Id = @0";
             var row = db.QuerySingle(dbCommand, restaurant.Id,restaurant.RestaurantName, restaurant.PostalCode,restaurant.HouseNumber,restaurant.HouseNumberPrefix,restaurant.City);
             db.Close();
             return restaurant;

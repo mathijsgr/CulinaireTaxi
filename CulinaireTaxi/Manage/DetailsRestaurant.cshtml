@@ -7,9 +7,29 @@
         Response.Redirect("~/");
     }
 
+    var RestaurantName = "";
+    var PostalCode = "";
+    var HouseNumber = "";
+    var HouseNumberPrefix = "";
+    var City = "";
+
+    RestaurantQuerys test = new RestaurantQuerys();
+
     // Na het opsturen voor goedkeuring mag een bedrijf niet de gegevens bewerken totdat deze zijn goed of afgekeurd.
-    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATE
-    bool RestaurantValidated = true;
+    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATERestaurantValidated
+    bool RestaurantValidated = false;
+    var currentRestaurantInfo = test.GetRestaurantByOwnerId(WebSecurity.CurrentUserId);
+
+    if (currentRestaurantInfo != null)
+    {
+        RestaurantValidated = true;
+
+        RestaurantName = currentRestaurantInfo.RestaurantName;
+        PostalCode = currentRestaurantInfo.PostalCode;
+        HouseNumber = currentRestaurantInfo.HouseNumber.ToString();
+        HouseNumberPrefix = currentRestaurantInfo.HouseNumberPrefix;
+        City = currentRestaurantInfo.City;
+    }
 
     if (IsPost)
     {
@@ -20,18 +40,22 @@
         Validation.RequireField("restaurant-housenumberprefix", "Vul een prioriteit in");
         Validation.RequireField("restaurant-city", "Vul een prioriteit in");
 
-        var RestaurantName = Request.Form["restaurant-name"];
-        var PostalCode = Request.Form["restaurant-postalcode"];
-        var HouseNumber = Request.Form["restaurant-housenumber"];
-        var HouseNumberPrefix = Request.Form["restaurant-housenumberprefix"];
-        var City = Request.Form["restaurant-city"];
+        RestaurantName = Request.Form["restaurant-name"];
+        PostalCode = Request.Form["restaurant-postalcode"];
+        HouseNumber = Request.Form["restaurant-housenumber"];
+        HouseNumberPrefix = Request.Form["restaurant-housenumberprefix"];
+        City = Request.Form["restaurant-city"];
 
+        if (RestaurantValidated)
+        {
+            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
+            test.EditRestaurant(newRestaurantInfo);
+            Response.Redirect("~/");
+        }
 
-        RestaurantQuerys test = new RestaurantQuerys();
+        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
 
-        test.AddRestaurant(WebSecurity.CurrentUserId.ToString(), RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
-
-        Response.Redirect("~/Account");
+        Response.Redirect("~/");
     }
 
 }
@@ -55,34 +79,34 @@
                             <form class="col s12" method="post">
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input placeholder="Bedrijfsnaam" name="restaurant-name" type="text" class="validate">
+                                        <input placeholder="Bedrijfsnaam" name="restaurant-name" type="text" class="validate" value="@RestaurantName">
                                         <label for="first_name">Bedrijfsnaam</label>
                                         @Html.ValidationMessage("restaurant-name")
                                     </div>
                                     <div class="input-field col s6">
-                                        <input placeholder="Locatie" name="restaurant-city" type="text" class="validate">
+                                        <input placeholder="Locatie" name="restaurant-city" type="text" class="validate" value="@City">
                                         <label for="last_name">Locatie</label>
                                         @Html.ValidationMessage("restaurant-city")
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s4">
-                                        <input placeholder="Straatnaam" ame="restaurant-streetname" type="text" class="validate">
+                                        <input placeholder="Straatnaam" ame="restaurant-streetname" type="text" class="validate"> 
                                         <label for="password">Straatnaam</label>
                                         @*@Html.ValidationMessage("restaurant-streetname")*@
                                     </div>
                                     <div class="input-field col s3">
-                                        <input placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate">
+                                        <input placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate" value="@PostalCode">
                                         <label for="password">Postcode</label>
                                         @Html.ValidationMessage("restaurant-postalcode")
                                     </div>
                                     <div class="input-field col s3">
-                                        <input placeholder="HuisNr" id="password" name="restaurant-housenumber" type="text" class="validate">
+                                        <input placeholder="HuisNr" id="password" name="restaurant-housenumber" type="text" class="validate" value="@HouseNumber">
                                         <label for="password">HuisNr</label>
                                         @Html.ValidationMessage("restaurant-housenumber")
                                     </div>
                                     <div class="input-field col s2">
-                                        <input placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate">
+                                        <input placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate" value="@HouseNumberPrefix">
                                         <label for="password">HuisNrPrefix</label>
                                         @Html.ValidationMessage("restaurant-housenumberprefix")
                                     </div>
