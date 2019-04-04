@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    Page.Title = "Manage Account";
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 1)
+    {
+        Response.Redirect("~/");
+    }
+
+    // Na het opsturen voor goedkeuring mag een bedrijf niet de gegevens bewerken totdat deze zijn goed of afgekeurd.
+    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATE
+    bool RestaurantValidated = true;
+
+    if (IsPost)
+    {
+
+        Validation.RequireField("restaurant-name", "Vul een naam in");
+        Validation.RequireField("restaurant-postalcode", "Vul een prijs in");
+        Validation.RequireField("restaurant-housenumber", "Voer een descriptie in");
+        Validation.RequireField("restaurant-housenumberprefix", "Vul een prioriteit in");
+        Validation.RequireField("restaurant-city", "Vul een prioriteit in");
+
+        var RestaurantName = Request.Form["restaurant-name"];
+        var PostalCode = Request.Form["restaurant-postalcode"];
+        var HouseNumber = Request.Form["restaurant-housenumber"];
+        var HouseNumberPrefix = Request.Form["restaurant-housenumberprefix"];
+        var City = Request.Form["restaurant-city"];
+
+
+        RestaurantQuerys test = new RestaurantQuerys();
+
+        test.AddRestaurant(WebSecurity.CurrentUserId.ToString(), RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
+
+        Response.Redirect("~/Account");
+    }
+
+}
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="col s12 center" style="margin-bottom:20px;">
+                            @if (RestaurantValidated)
+                            {
+                                <h5>Bewerk uw bedrijfsgegevens</h5>
+                            }
+                            else
+                            {
+                                <h5>Voeg uw bedrijf toe aan de website</h5>
+                            }
+                        </div>
+                        <div class="row">
+                            <form class="col s12" method="post">
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input placeholder="Bedrijfsnaam" name="restaurant-name" type="text" class="validate">
+                                        <label for="first_name">Bedrijfsnaam</label>
+                                        @Html.ValidationMessage("restaurant-name")
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input placeholder="Locatie" name="restaurant-city" type="text" class="validate">
+                                        <label for="last_name">Locatie</label>
+                                        @Html.ValidationMessage("restaurant-city")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input placeholder="Straatnaam" ame="restaurant-streetname" type="text" class="validate">
+                                        <label for="password">Straatnaam</label>
+                                        @*@Html.ValidationMessage("restaurant-streetname")*@
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate">
+                                        <label for="password">Postcode</label>
+                                        @Html.ValidationMessage("restaurant-postalcode")
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input placeholder="HuisNr" id="password" name="restaurant-housenumber" type="text" class="validate">
+                                        <label for="password">HuisNr</label>
+                                        @Html.ValidationMessage("restaurant-housenumber")
+                                    </div>
+                                    <div class="input-field col s2">
+                                        <input placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate">
+                                        <label for="password">HuisNrPrefix</label>
+                                        @Html.ValidationMessage("restaurant-housenumberprefix")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea name="restaurant-description" placeholder="Voer hier een descriptie en verdere informatie in over uw bedrijf, met bijv. een link naar een eigen site (max 160 characters)" id="textarea2" class="materialize-textarea" data-length="160"></textarea>
+                                        <label for="textarea2">Voer een beschrijving in</label>
+                                        @*@Html.ValidationMessage("restaurant-description")*@
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" href="" class="btn-flat right" style="color:green">
+                                        @if (RestaurantValidated)
+                                        {
+                                            <span>Gegevens bijwerken</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Versturen voor goedkeuring</span>
+                                        } 
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

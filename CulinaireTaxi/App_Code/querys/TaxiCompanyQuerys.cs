@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using WebMatrix.Data;
 
-namespace CulinaireTaxi.App_Data.querys
-{
     public class TaxiCompanyQuerys : DatabaseInfo
     {
-        public void AddTaxiCompany(string OwnerId, string CompanyName, string CompanyLocation)
+        public void AddTaxiCompany(int OwnerId, string CompanyName, string CompanyLocation)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "INSERT INTO TaxiCompany (OwnerId,CompanyName,CompanyLocation) "
@@ -72,4 +70,3 @@ namespace CulinaireTaxi.App_Data.querys
             db.Close();
         }
     }
-}
