@@ -2,14 +2,28 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
-    if (!WebSecurity.IsAuthenticated )
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
     {
         Response.Redirect("~/");
     }
 
+    var TaxiName = "";
+    var PostalCode = "";
+    var City = "";
+
+    TaxiCompanyQuerys taxiquerys = new TaxiCompanyQuerys();
+
     // Na het opsturen voor goedkeuring mag een bedrijf niet de gegevens bewerken totdat deze zijn goed of afgekeurd.
-    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATE
-    bool RestaurantValidated = true;
+    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATERestaurantValidated
+    bool IsValidated = false;
+    var currentTaxiInfo = taxiquerys.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
+
+    if (currentTaxiInfo != null)
+    {
+        IsValidated = true;
+        TaxiName = currentTaxiInfo.CompanyName;
+        City = currentTaxiInfo.CompanyLocation;
+    }
 
     if (IsPost)
     {
@@ -18,12 +32,16 @@
         Validation.RequireField("taxi-postalcode", "Vul een prijs in");
         Validation.RequireField("taxi-city", "Vul een prioriteit in");
 
-        var TaxiName = Request.Form["taxi-name"];
-        var PostalCode = Request.Form["taxi-postalcode"];
-        var City = Request.Form["taxi-city"];
+        TaxiName = Request.Form["taxi-name"];
+        PostalCode = Request.Form["taxi-postalcode"];
+        City = Request.Form["taxi-city"];
 
-
-        TaxiCompanyQuerys taxiquerys = new TaxiCompanyQuerys();
+        if (IsValidated)
+        {
+            TaxiCompany newRestaurantInfo = new TaxiCompany(currentTaxiInfo.Id, WebSecurity.CurrentUserId, TaxiName, City);
+            taxiquerys.EditTaxiCompany(newRestaurantInfo);
+            Response.Redirect("~/Manage");
+        }
 
         taxiquerys.AddTaxiCompany(WebSecurity.CurrentUserId, TaxiName, City);
 
@@ -38,7 +56,7 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="col s12 center" style="margin-bottom:20px;">
-                            @if (RestaurantValidated)
+                            @if (IsValidated)
                             {
                                 <h5>Bewerk uw bedrijfsgegevens</h5>
                             }
@@ -51,26 +69,26 @@
                             <form class="col s12" method="post">
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input placeholder="Bedrijfsnaam" name="taxi-name" type="text" class="validate">
+                                        <input placeholder="Bedrijfsnaam" name="taxi-name" type="text" class="validate" value="@TaxiName">
                                         <label for="first_name">Bedrijfsnaam</label>
                                         @Html.ValidationMessage("taxi-name")
                                     </div>
                                     <div class="input-field col s6">
-                                        <input placeholder="Locatie" name="taxi-city" type="text" class="validate">
+                                        <input placeholder="Locatie" name="taxi-city" type="text" class="validate" value="@City">
                                         <label for="last_name">Locatie</label>
                                         @Html.ValidationMessage("taxi-city")
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s3">
-                                        <input placeholder="Postcode" name="taxi-postalcode" type="text" class="validate">
+                                        <input placeholder="Postcode" name="taxi-postalcode" type="text" class="validate" value="@PostalCode">
                                         <label for="password">Postcode</label>
                                         @Html.ValidationMessage("taxi-postalcode")
                                     </div>
                                 </div>
                                 <div class="card-action">
                                     <button type="submit" href="" class="btn-flat right" style="color:green">
-                                        @if (RestaurantValidated)
+                                        @if (IsValidated)
                                         {
                                             <span>Gegevens bijwerken</span>
                                         }

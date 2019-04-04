@@ -23,6 +23,20 @@ using WebMatrix.Data;
             return company;
         }
 
+        public TaxiCompany GetTaxiCompanyByOwnerId(int Id)
+        {
+            Database db = Database.Open(DatabaseName);
+            string insertCommand = "SELECT * FROM TaxiCompany WHERE OwnerId = @0";
+            var row = db.QuerySingle(insertCommand, Id);
+            db.Close();
+            if (row == null) return null;
+            else
+            {
+                var company = new TaxiCompany(row.Id, row.OwnerId, row.CompanyName, row.CompanyLocation);
+                return company;
+            }
+        }
+
         public List<TaxiCompany> GetAllCompanies()
         {
             Database db = Database.Open(DatabaseName);
@@ -53,10 +67,10 @@ using WebMatrix.Data;
             return companies;
         }
 
-        public TaxiCompany EditReservation(TaxiCompany taxiCompany)
+        public TaxiCompany EditTaxiCompany(TaxiCompany taxiCompany)
         {
             Database db = Database.Open(DatabaseName);
-            var dbCommand = "UPDATE TaxiCompany SET (CompanyName = @1,CompanyLocation = @2) WHERE Id = @0";
+            var dbCommand = "UPDATE TaxiCompany SET CompanyName = @1,CompanyLocation = @2 WHERE Id = @0";
             db.QuerySingle(dbCommand, taxiCompany.Id, taxiCompany.CompanyName, taxiCompany.CompanyLocation);
             db.Close();
             return taxiCompany;

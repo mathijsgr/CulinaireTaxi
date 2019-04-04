@@ -9,7 +9,7 @@
 
     UserInfoQuerys userinfoquery = new UserInfoQuerys();
 
-    var userinfotest = userinfoquery.GetUserInfo(WebSecurity.CurrentUserId.ToString());
+    var CurrentUserInfo = userinfoquery.GetUserInfo(WebSecurity.CurrentUserId.ToString());
 
 
     if (IsPost)
@@ -32,7 +32,7 @@
         var City = Request.Form["userinfo-city"];
 
 
-        UserInfo userInfo = new UserInfo(userinfotest.Id, WebSecurity.CurrentUserId, FirstName, Prefix, LastName, PostalCode, Convert.ToInt32(HouseNumber) , HouseNumberPrefix, City, 1);
+        UserInfo userInfo = new UserInfo(CurrentUserInfo.Id, WebSecurity.CurrentUserId, FirstName, Prefix, LastName, PostalCode, Convert.ToInt32(HouseNumber) , HouseNumberPrefix, City, CurrentUserInfo.Role);
 
         userinfoquery.EditUserInfo(userInfo);
 
@@ -53,39 +53,39 @@
                             <form class="col s12" method="post">
                                 <div class="row">
                                     <div class="input-field col s4">
-                                        <input placeholder="Voornaam" name="userinfo-firstname" type="text" class="validate" value="@userinfotest.FirstName">
+                                        <input placeholder="Voornaam" name="userinfo-firstname" type="text" class="validate" value="@CurrentUserInfo.FirstName">
                                         <label for="first_name">Voornaam</label>
                                         @Html.ValidationMessage("userinfo-firstname")
                                     </div>
                                     <div class="input-field col s4">
-                                        <input placeholder="Tussenvoegsel" name="userinfo-prefix" type="text" class="validate" value="@userinfotest.Prefix">
+                                        <input placeholder="Tussenvoegsel" name="userinfo-prefix" type="text" class="validate" value="@CurrentUserInfo.Prefix">
                                         <label for="last_name">Tussenvoegsel</label>
                                         @Html.ValidationMessage("userinfo-prefix")
                                     </div>
                                     <div class="input-field col s4">
-                                        <input placeholder="Achternaam" name="userinfo-lastname" type="text" class="validate" value="@userinfotest.LastName">
+                                        <input placeholder="Achternaam" name="userinfo-lastname" type="text" class="validate" value="@CurrentUserInfo.LastName">
                                         <label for="password">Achternaam</label>
                                         @Html.ValidationMessage("userinfo-lastname")
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s3">
-                                        <input placeholder="Postcode" name="userinfo-postalcode" type="text" class="validate" value="@userinfotest.PostalCode">
+                                        <input placeholder="Postcode" name="userinfo-postalcode" type="text" class="validate" value="@CurrentUserInfo.PostalCode">
                                         <label for="password">Postcode</label>
                                         @Html.ValidationMessage("userinfo-postalcode")
                                     </div>
                                     <div class="input-field col s3">
-                                        <input placeholder="Huisnummer" id="password" name="userinfo-housenumber" type="text" class="validate" value="@userinfotest.HouseNumber">
+                                        <input placeholder="Huisnummer" id="password" name="userinfo-housenumber" type="text" class="validate" value="@CurrentUserInfo.HouseNumber">
                                         <label for="password">Huisnummer</label>
                                         @Html.ValidationMessage("userinfo-housenumber")
                                     </div>
                                     <div class="input-field col s2">
-                                        <input placeholder="Huisnummer extra" name="userinfo-housenumberprefix" type="text" class="validate" value="@userinfotest.HouseNumberPrefix">
+                                        <input placeholder="Huisnummer extra" name="userinfo-housenumberprefix" type="text" class="validate" value="@CurrentUserInfo.HouseNumberPrefix">
                                         <label for="password">Huisnummer extra</label>
                                         @Html.ValidationMessage("userinfo-housenumberprefix")
                                     </div>
                                     <div class="input-field col s4">
-                                        <input placeholder="Stad/Locatie" name="userinfo-city" type="text" class="validate" value="@userinfotest.City">
+                                        <input placeholder="Stad/Locatie" name="userinfo-city" type="text" class="validate" value="@CurrentUserInfo.City">
                                         <label for="password">Stad/Locatie</label>
                                         @Html.ValidationMessage("userinfo-city")
                                     </div>

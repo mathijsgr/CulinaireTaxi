@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CulinaireTaxi.App_Data.DataObjects
-{
+
     public class TaxiCompany
     {
         public int Id { get; private set; }
@@ -20,4 +19,3 @@ namespace CulinaireTaxi.App_Data.DataObjects
             this.CompanyLocation = CompanyLocation;
         }
     }
-}
