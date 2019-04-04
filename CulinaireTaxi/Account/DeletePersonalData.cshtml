@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "_Layout.cshtml";
-    Page.Title = "Manage Account";
+    Page.Title = "Account verwijderen";
 }
 <div class="row">
     <div class="col s12">
@@ -10,17 +10,21 @@
                     <div class="card-content">
                         <div class="col s12 center" style="margin-bottom:20px;">
                             <h5>@Page.Title</h5>
-                            <p>
-                                <strong>Het verwijderen van uw account kan niet ongedaan worden gemaakt.</strong>
-                            </p>
                         </div>
                         <div class="row">
-                            <form id="delete-user" method="post" class="form-group">
-                                
-                    
-                                
-                                <button class="btn btn-danger " type="submit">Verwijder en sluit mijn account</button>
-                            </form>
+                            <div class="col s12 center">
+                                <p>Weet u zeker dat u uw account wilt verwijderen?<br /></p>
+                                <p>
+                                    <strong>Het verwijderen van een account kan niet ongedaan worden gemaakt.</strong>
+                                </p>
+                            </div>
+                            <div class="col s12 center" style="margin-top:20px">
+                                <form id="delete-user" method="post" class="form-group">
+                                    <button class="btn btn-danger " type="submit">Verwijder en sluit mijn account</button>
+                                </form>
+                            </div>
+                            <p>
+                            </p>
                         </div>
                     </div>
                 </div>
