@@ -9,13 +9,13 @@ using System.Threading.Tasks;
         public int OwnerId { get; private set; }
         public string RestaurantName { get; private set; }
         public string PostalCode { get; private set; }
-        public int HouseNumber { get; private set; }
+        public string HouseNumber { get; private set; }
         public string HouseNumberPrefix { get; private set; }
         public string City { get; private set; }
         public string Description { get; private set; }
         public int HasBeenValidated { get; private set; }
 
-    public Restaurant(int Id, int OwnerId, string RestaurantName, string PostalCode, int HouseNumber, string HouseNumberPrefix, string City, string Description, int HasBeenValidated)
+    public Restaurant(int Id, int OwnerId, string RestaurantName, string PostalCode, string HouseNumber, string HouseNumberPrefix, string City, string Description, int HasBeenValidated)
         {
             this.Id = Id;
             this.OwnerId = OwnerId;

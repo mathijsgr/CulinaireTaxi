@@ -7,7 +7,7 @@ using WebMatrix.Data;
 
     public class RestaurantQuerys : DatabaseInfo
     {
-        public void AddRestaurant(int OwnerId, string RestaurantName,string PostalCode,int HouseNumber,string HouseNumberPrefix,string City, string Description)
+        public void AddRestaurant(int OwnerId, string RestaurantName,string PostalCode,string HouseNumber,string HouseNumberPrefix,string City, string Description)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "INSERT INTO Restaurant (OwnerId,RestaurantName,PostalCode,HouseNumber,HouseNumberPrefix,City,Description,HasBeenValidated) "

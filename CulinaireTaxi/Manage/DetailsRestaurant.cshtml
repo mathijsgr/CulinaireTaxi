@@ -35,12 +35,11 @@
     if (IsPost)
     {
 
-        Validation.RequireField("restaurant-name", "Vul een naam in");
-        Validation.RequireField("restaurant-postalcode", "Vul een prijs in");
-        Validation.RequireField("restaurant-housenumber", "Voer een descriptie in");
-        Validation.RequireField("restaurant-housenumberprefix", "Vul een prioriteit in");
-        Validation.RequireField("restaurant-city", "Vul een prioriteit in");
-        Validation.RequireField("restaurant-description", "Vul een prioriteit in");
+        Validation.RequireField("restaurant-name", "Voer een naam in");
+        Validation.RequireField("restaurant-postalcode", "Voer een postcode in");
+        Validation.RequireField("restaurant-housenumber", "Voer een huisnummer in");
+        Validation.RequireField("restaurant-city", "Voer de locatie in");
+        Validation.RequireField("restaurant-description", "Voer een descriptie in");
 
         RestaurantName = Request.Form["restaurant-name"];
         PostalCode = Request.Form["restaurant-postalcode"];
@@ -51,12 +50,12 @@
 
         if (RestaurantValidated)
         {
-            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City, Description, 3);
+            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description, 3);
             test.EditRestaurant(newRestaurantInfo);
             Response.Redirect("~/");
         }
 
-        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City, Description);
+        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description);
 
         Response.Redirect("~/");
     }
@@ -111,7 +110,6 @@
                                     <div class="input-field col s2">
                                         <input required placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate" value="@HouseNumberPrefix">
                                         <label for="password">HuisNrPrefix</label>
-                                        @Html.ValidationMessage("restaurant-housenumberprefix")
                                     </div>
                                 </div>
                                 <div class="row">

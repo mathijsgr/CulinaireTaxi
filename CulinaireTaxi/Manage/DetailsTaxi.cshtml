@@ -30,10 +30,10 @@
     if (IsPost)
     {
 
-        Validation.RequireField("taxi-name", "Vul een naam in");
-        Validation.RequireField("taxi-postalcode", "Vul een prijs in");
-        Validation.RequireField("taxi-city", "Vul een prioriteit in");
-        Validation.RequireField("taxi-description", "Vul een prioriteit in");
+        Validation.RequireField("taxi-name", "voer een naam in");
+        Validation.RequireField("taxi-postalcode", "Voer een postcode in");
+        Validation.RequireField("taxi-city", "Voer een locatie in");
+        Validation.RequireField("taxi-description", "Voer een beschrijving in");
 
         TaxiName = Request.Form["taxi-name"];
         PostalCode = Request.Form["taxi-postalcode"];
