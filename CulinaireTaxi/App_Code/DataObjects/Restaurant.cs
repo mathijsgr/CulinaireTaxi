@@ -12,8 +12,10 @@ using System.Threading.Tasks;
         public int HouseNumber { get; private set; }
         public string HouseNumberPrefix { get; private set; }
         public string City { get; private set; }
+        public string Description { get; private set; }
+        public int HasBeenValidated { get; private set; }
 
-        public Restaurant(int Id, int OwnerId, string RestaurantName, string PostalCode, int HouseNumber, string HouseNumberPrefix, string City)
+    public Restaurant(int Id, int OwnerId, string RestaurantName, string PostalCode, int HouseNumber, string HouseNumberPrefix, string City, string Description, int HasBeenValidated)
         {
             this.Id = Id;
             this.OwnerId = OwnerId;
@@ -22,5 +24,7 @@ using System.Threading.Tasks;
             this.HouseNumber = HouseNumber;
             this.HouseNumberPrefix = HouseNumberPrefix;
             this.City = City;
+            this.Description = Description;
+            this.HasBeenValidated = HasBeenValidated;
         }
     }

@@ -12,6 +12,7 @@
     var HouseNumber = "";
     var HouseNumberPrefix = "";
     var City = "";
+    var Description = "";
 
     RestaurantQuerys test = new RestaurantQuerys();
 
@@ -39,21 +40,23 @@
         Validation.RequireField("restaurant-housenumber", "Voer een descriptie in");
         Validation.RequireField("restaurant-housenumberprefix", "Vul een prioriteit in");
         Validation.RequireField("restaurant-city", "Vul een prioriteit in");
+        Validation.RequireField("restaurant-description", "Vul een prioriteit in");
 
         RestaurantName = Request.Form["restaurant-name"];
         PostalCode = Request.Form["restaurant-postalcode"];
         HouseNumber = Request.Form["restaurant-housenumber"];
         HouseNumberPrefix = Request.Form["restaurant-housenumberprefix"];
         City = Request.Form["restaurant-city"];
+        Description = Request.Form["restaurant-description"];
 
         if (RestaurantValidated)
         {
-            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
+            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City, Description, 3);
             test.EditRestaurant(newRestaurantInfo);
             Response.Redirect("~/");
         }
 
-        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City);
+        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, Convert.ToInt32(HouseNumber), HouseNumberPrefix, City, Description);
 
         Response.Redirect("~/");
     }
@@ -79,7 +82,7 @@
                             <form class="col s12" method="post">
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input placeholder="Bedrijfsnaam" name="restaurant-name" type="text" class="validate" value="@RestaurantName">
+                                        <input required placeholder="Bedrijfsnaam" name="restaurant-name" type="text" class="validate" value="@RestaurantName">
                                         <label for="first_name">Bedrijfsnaam</label>
                                         @Html.ValidationMessage("restaurant-name")
                                     </div>
@@ -92,28 +95,28 @@
                                 <div class="row">
                                     <div class="input-field col s4">
                                         <input placeholder="Straatnaam" ame="restaurant-streetname" type="text" class="validate"> 
-                                        <label for="password">Straatnaam</label>
+                                        <label required for="password">Straatnaam</label>
                                         @*@Html.ValidationMessage("restaurant-streetname")*@
                                     </div>
                                     <div class="input-field col s3">
-                                        <input placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate" value="@PostalCode">
+                                        <input required placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate" value="@PostalCode">
                                         <label for="password">Postcode</label>
                                         @Html.ValidationMessage("restaurant-postalcode")
                                     </div>
                                     <div class="input-field col s3">
-                                        <input placeholder="HuisNr" id="password" name="restaurant-housenumber" type="text" class="validate" value="@HouseNumber">
+                                        <input required placeholder="HuisNr" id="password" name="restaurant-housenumber" type="text" class="validate" value="@HouseNumber">
                                         <label for="password">HuisNr</label>
                                         @Html.ValidationMessage("restaurant-housenumber")
                                     </div>
                                     <div class="input-field col s2">
-                                        <input placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate" value="@HouseNumberPrefix">
+                                        <input required placeholder="HuisNrPrefix" name="restaurant-housenumberprefix" type="text" class="validate" value="@HouseNumberPrefix">
                                         <label for="password">HuisNrPrefix</label>
                                         @Html.ValidationMessage("restaurant-housenumberprefix")
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <textarea name="restaurant-description" placeholder="Voer hier een descriptie en verdere informatie in over uw bedrijf, met bijv. een link naar een eigen site (max 160 characters)" id="textarea2" class="materialize-textarea" data-length="160"></textarea>
+                                        <textarea required name="restaurant-description" placeholder="Voer hier een descriptie in." id="textarea2" class="materialize-textarea" data-length="160">@Description</textarea>
                                         <label for="textarea2">Voer een beschrijving in</label>
                                         @*@Html.ValidationMessage("restaurant-description")*@
                                     </div>

@@ -10,6 +10,7 @@
     var TaxiName = "";
     var PostalCode = "";
     var City = "";
+    var Description = "";
 
     TaxiCompanyQuerys taxiquerys = new TaxiCompanyQuerys();
 
@@ -23,6 +24,7 @@
         IsValidated = true;
         TaxiName = currentTaxiInfo.CompanyName;
         City = currentTaxiInfo.CompanyLocation;
+        Description = currentTaxiInfo.Description;
     }
 
     if (IsPost)
@@ -31,19 +33,21 @@
         Validation.RequireField("taxi-name", "Vul een naam in");
         Validation.RequireField("taxi-postalcode", "Vul een prijs in");
         Validation.RequireField("taxi-city", "Vul een prioriteit in");
+        Validation.RequireField("taxi-description", "Vul een prioriteit in");
 
         TaxiName = Request.Form["taxi-name"];
         PostalCode = Request.Form["taxi-postalcode"];
         City = Request.Form["taxi-city"];
+        Description = Request.Form["taxi-description"];
 
         if (IsValidated)
         {
-            TaxiCompany newRestaurantInfo = new TaxiCompany(currentTaxiInfo.Id, WebSecurity.CurrentUserId, TaxiName, City);
+            TaxiCompany newRestaurantInfo = new TaxiCompany(currentTaxiInfo.Id, WebSecurity.CurrentUserId, TaxiName, City, Description, 3);
             taxiquerys.EditTaxiCompany(newRestaurantInfo);
             Response.Redirect("~/Manage");
         }
 
-        taxiquerys.AddTaxiCompany(WebSecurity.CurrentUserId, TaxiName, City);
+        taxiquerys.AddTaxiCompany(WebSecurity.CurrentUserId, TaxiName, City, Description);
 
         Response.Redirect("~/Manage");
     }
@@ -86,6 +90,13 @@
                                         @Html.ValidationMessage("taxi-postalcode")
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea required placeholder="Definieer hier het contract  (max 160 characters)" id="textarea2" name="taxi-description" class="materialize-textarea" data-length="160">@Description</textarea>
+                                        <label for="textarea2">Voer een beschrijving in</label>
+                                        @Html.ValidationMessage("taxi-description")
+                                    </div>
+                                </div>
                                 <div class="card-action">
                                     <button type="submit" href="" class="btn-flat right" style="color:green">
                                         @if (IsValidated)
@@ -95,7 +106,7 @@
                                         else
                                         {
                                             <span>Versturen voor goedkeuring</span>
-                                        } 
+                                        }
                                     </button>
                                 </div>
                             </form>
