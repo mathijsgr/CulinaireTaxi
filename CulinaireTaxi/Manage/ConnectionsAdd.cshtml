@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    Page.Title = "Manage Account";
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
+    {
+        Response.Redirect("~/");
+    }
+
+    TaxiCompanyQuerys taxiQuery = new TaxiCompanyQuerys();
+    var taxiData = taxiQuery.GetAllCompanies();
+
+}
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="col s12 center" style="margin-bottom:20px;">
+                            <h5>Alle beschikbare bedrijven</h5>
+                        </div>
+                        <div class="row">
+                            <div id="test1" class="col s12 left">
+                                <ul class="collection">
+                                    @foreach (var data in taxiData)
+                                        {
+                                            <li class="collection-item avatar">
+                                                <i class="material-icons circle black">assignment</i>
+                                                <span class="title">Taxibedrijf: @data.CompanyName</span>
+                                                <p>
+                                                    @data.CompanyLocation.
+                                                </p>
+                                                <a href="~/Manage/ConnectionsAddTaxiDetails?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                            </li>
+                                        }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

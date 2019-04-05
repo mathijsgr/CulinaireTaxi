@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using WebMatrix.Data;
 
-namespace CulinaireTaxi.App_Data.querys
-{
     public class TaxiRestaurantContractQuerys : DatabaseInfo
     {
         public void AddContract(int RestaurantId, int TaxiCompanyId, string ContractDescription)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "INSERT INTO TaxiRestaurantContract (RestaurantId,TaxiCompanyId,ContractDescription) "
+            string insertCommand = "INSERT INTO TaxiRestaurantContract (RestaurantId, TaxiCompanyId, ContractDescription) "
                 + "VALUES(@0,@1,@2)";
             db.QuerySingle(insertCommand, RestaurantId, TaxiCompanyId, ContractDescription);
             db.Close();
@@ -75,4 +73,3 @@ namespace CulinaireTaxi.App_Data.querys
             db.Close();
         }
     }
-}

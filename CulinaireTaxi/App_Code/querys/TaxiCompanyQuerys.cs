@@ -16,9 +16,10 @@ using WebMatrix.Data;
         public TaxiCompany GetTaxiCompany(int Id)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiCompany WHERE Id = @0)";
+            string insertCommand = "SELECT * FROM TaxiCompany WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
+            if (row == null) return null;
             var company = new TaxiCompany(row.Id,row.OwnerId, row.CompanyName, row.CompanyLocation);
             return company;
         }
@@ -40,7 +41,7 @@ using WebMatrix.Data;
         public List<TaxiCompany> GetAllCompanies()
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiCompany)";
+            string insertCommand = "SELECT * FROM TaxiCompany";
             var rows = db.Query(insertCommand);
             db.Close();
             List<TaxiCompany> companies = new List<TaxiCompany>();
