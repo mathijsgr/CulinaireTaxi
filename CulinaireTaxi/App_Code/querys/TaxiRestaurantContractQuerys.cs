@@ -27,7 +27,7 @@ using WebMatrix.Data;
         public List <TaxiRestaurantContract> GetContractsFromRestaurant(int RestaurantId)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE RestaurantId = @0)";
+            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE RestaurantId = @0";
             var rows = db.Query(insertCommand, RestaurantId);
             db.Close();
 
@@ -43,7 +43,7 @@ using WebMatrix.Data;
         public List<TaxiRestaurantContract> GetContractsFromTaxiCompany(int TaxiCompanyId)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE TaxiCompanyId = @0)";
+            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE TaxiCompanyId = @0";
             var rows = db.Query(insertCommand,TaxiCompanyId);
             db.Close();
 

@@ -2,6 +2,29 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/");
+    }
+
+    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    TaxiRestaurantContractQuerys contractQuery = new TaxiRestaurantContractQuerys();
+
+    var contractsData = new List<TaxiRestaurantContract>();
+
+    if (userRole == 2)
+    {
+        TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+        var taxiData = tQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
+        contractsData = contractQuery.GetContractsFromTaxiCompany(taxiData.Id);
+    }
+    else if (userRole == 3)
+    {
+        RestaurantQuerys rQuery = new RestaurantQuerys();
+        var restaurantData = rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId);
+        contractsData = contractQuery.GetContractsFromRestaurant(restaurantData.Id);
+
+    }
 
 }
 <div class="row">
@@ -16,27 +39,30 @@
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle black">assignment</i>
-                                        <span class="title">Contract met bedrijf</span>
-                                        <p>
-                                            Uw contract met bedrijf.
-                                        </p>
-                                        <a href="~/Manage/ConnectionsDetails" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle black">assignment</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Uw contract met bedrijf.
-                                        </p>
-                                        <a href="~/Manage/ConnectionsDetails" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
+                                    @foreach (var data in contractsData)
+                                    {
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle black">assignment</i>
+                                            <span class="title">Contract met @data.RestaurantId</span>
+                                            <p>
+                                                Uw contract met bedrijf.
+                                            </p>
+                                            <a href="~/Manage/ConnectionsDetails" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>
                         <div class="card-action">
-                            <a href="~/Manage/ConnectionsAdd">Nieuwe koppeling</a>
+                            @if (userRole == 2)
+                            {
+                                <a href="~/Manage/ConnectionsAdd">Nieuwe koppeling met Taxibedrijf</a>
+                            }
+                            else if (userRole == 3)
+                            {
+                                <a href="~/Manage/ConnectionsAdd">Nieuwe koppeling met Restaurant</a>
+
+                            }
                         </div>
                     </div>
                 </div>

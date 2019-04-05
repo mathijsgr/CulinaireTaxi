@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    Page.Title = "Manage Account";
+
+    string companyId = Request.QueryString["company"];
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3 || companyId == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    TaxiCompanyQuerys taxiQuery = new TaxiCompanyQuerys();
+    var taxiData = taxiQuery.GetTaxiCompany(Convert.ToInt32(companyId));
+
+    RestaurantQuerys rQuery = new RestaurantQuerys();
+    var restaurantData = rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId);
+
+    if (taxiData == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    if (IsPost)
+    {
+        Validation.RequireField("contract-description", "Vul een naam in");
+
+        var ContractDescription = Request.Form["contract-description"];
+
+        TaxiRestaurantContractQuerys ContractQuery = new TaxiRestaurantContractQuerys();
+
+        ContractQuery.AddContract(restaurantData.Id, Convert.ToInt32(companyId), ContractDescription);
+
+    }
+
+}
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="col s12 center" style="margin-bottom:20px;">
+                            <h5>Gegevens beide partijen</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col s6 collection-item valign-wrapper">
+                                <i class="material-icons small valign">restaurant</i>
+                                <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">Geselecteerde restaurant: @restaurantData.RestaurantName</span>
+                            </div>
+                            <div class="col s6 collection-item valign-wrapper">
+                                <i class="material-icons small valign">account_circle</i>
+                                <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">Geselecteerde Taxibedrijf: @taxiData.CompanyName</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row col s12">
+                                <h5>Beschrijving Restaurant</h5>
+                            </div>
+                            <div class="row col s12">
+                                <div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">@restaurantData.PostalCode, Nr: @restaurantData.HouseNumberPrefix, @restaurantData.HouseNumber </span>
+                                </div>
+                                @*<div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">Locatie</span>
+                                </div>
+                                <div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">Verder info</span>
+                                </div>*@
+                            </div>
+                            <div class="col s12">
+                                <p class="validate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et finibus erat. In tempor dapibus pulvinar. Sed vitae urna ac magna ultrices condimentum. Nullam volutpat vel ligula sed posuere. Proin nec imperdiet leo, nec tempus nunc. Suspendisse sit amet ullamcorper dolor. Proin sagittis ullamcorper velit vitae venenatis.</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row col s12">
+                                <h5>Beschrijving Taxibedrijf</h5>
+                            </div>
+                            <div class="row col s12">
+                                <div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">@taxiData.CompanyLocation</span>
+                                </div>
+                                @*<div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">Locatie</span>
+                                </div>
+                                <div class="col s4 collection-item valign-wrapper">
+                                    <i class="material-icons small valign">location_city</i>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">Verder info</span>
+                                </div>*@
+                            </div>
+                            <div class="col s12">
+                                <p class="validate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et finibus erat. In tempor dapibus pulvinar. Sed vitae urna ac magna ultrices condimentum. Nullam volutpat vel ligula sed posuere. Proin nec imperdiet leo, nec tempus nunc. Suspendisse sit amet ullamcorper dolor. Proin sagittis ullamcorper velit vitae venenatis.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="col s12 center" style="margin-bottom:20px;">
+                        <h5>Definieer het contract</h5>
+                    </div>
+                    <div class="card-content">
+                        <form method="post">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea required placeholder="Definieer hier het contract  (max 160 characters)" id="textarea2" name="contract-description" class="materialize-textarea" data-length="160"></textarea>
+                                    <label for="textarea2">Voer een beschrijving in</label>
+                                    @Html.ValidationMessage("contract-description")
+                                </div>
+                            </div>
+                            <div class="card-action">
+                                <button type="submit" class="btn-flat right" style="color:green">
+                                    <span>Contract versturen</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

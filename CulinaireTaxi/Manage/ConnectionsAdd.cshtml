@@ -2,13 +2,31 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
+    if (!WebSecurity.IsAuthenticated)
     {
         Response.Redirect("~/");
     }
 
-    TaxiCompanyQuerys taxiQuery = new TaxiCompanyQuerys();
-    var taxiData = taxiQuery.GetAllCompanies();
+    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    var taxiData = new List<TaxiCompany>();
+    var restaurantData = new List<Restaurant>();
+
+    if (userRole == 3)
+    {
+        TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+        taxiData = tQuery.GetAllCompanies();
+
+    } else if (userRole == 2)
+    {
+        RestaurantQuerys rQuery = new RestaurantQuerys();
+        restaurantData = rQuery.GetAllRestaurants();
+
+    } else
+    {
+        Response.Redirect("~/");
+    }
+
+
 
 }
 <div class="row">
@@ -18,12 +36,34 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="col s12 center" style="margin-bottom:20px;">
-                            <h5>Alle beschikbare bedrijven</h5>
+                            @if (userRole == 2)
+                            {
+                                <h5>Alle beschikbare restauranten</h5>
+                            } else
+                            {
+                                <h5>Alle beschikbare taxibedrijven</h5>
+                            }
                         </div>
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    @foreach (var data in taxiData)
+                                    @if (userRole == 2)
+                                    {
+                                        foreach (var data in restaurantData)
+                                        {
+                                            <li class="collection-item avatar">
+                                                <i class="material-icons circle black">assignment</i>
+                                                <span class="title">Taxibedrijf: @data.RestaurantName</span>
+                                                <p>
+                                                    @data.City.
+                                                </p>
+                                                <a href="~/Manage/ConnectionsAddRestaurant?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                            </li>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var data in taxiData)
                                         {
                                             <li class="collection-item avatar">
                                                 <i class="material-icons circle black">assignment</i>
@@ -31,9 +71,10 @@
                                                 <p>
                                                     @data.CompanyLocation.
                                                 </p>
-                                                <a href="~/Manage/ConnectionsAddTaxiDetails?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                                <a href="~/Manage/ConnectionsAddTaxi?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
                                             </li>
                                         }
+                                    }
                                 </ul>
                             </div>
                         </div>

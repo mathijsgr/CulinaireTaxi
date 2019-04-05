@@ -2,7 +2,7 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 1)
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3)
     {
         Response.Redirect("~/");
     }

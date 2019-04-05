@@ -10,19 +10,25 @@
     }
 
     TaxiCompanyQuerys taxiQuery = new TaxiCompanyQuerys();
-    var taxiData = taxiQuery.GetTaxiCompany(Convert.ToInt32(companyId));
+    var taxiData = taxiQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
 
-    if (taxiData == null)
+    RestaurantQuerys rQuery = new RestaurantQuerys();
+    var restaurantData = rQuery.GetRestaurantByOwnerId(Convert.ToInt32(companyId));
+
+    if (restaurantData == null)
     {
         Response.Redirect("~/");
     }
 
     if (IsPost)
     {
+        Validation.RequireField("contract-description", "Vul een naam in");
+
+        var ContractDescription = Request.Form["contract-description"];
 
         TaxiRestaurantContractQuerys ContractQuery = new TaxiRestaurantContractQuerys();
 
-        ContractQuery.AddContract(6, Convert.ToInt32(companyId),"123");
+        ContractQuery.AddContract(Convert.ToInt32(companyId), taxiData.Id , ContractDescription);
 
     }
 
