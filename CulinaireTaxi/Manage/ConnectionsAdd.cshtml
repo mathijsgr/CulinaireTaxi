@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DataObjects
+@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
@@ -7,7 +9,9 @@
         Response.Redirect("~/");
     }
 
-    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
     var taxiData = new List<TaxiCompany>();
     var restaurantData = new List<Restaurant>();
 

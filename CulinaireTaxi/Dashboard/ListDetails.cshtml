@@ -5,23 +5,23 @@
     string listId = Request.QueryString["list"];
     string uniqueToken = Request.QueryString["unique_token"];
     bool isOwnerOfList = false;
-    var listData = new List<Gift>();
+    //var listData = new List<Gift>();
 
-    if (!ListProvider.CheckIfListValid(listId, uniqueToken))
-    {
-        Response.Redirect("~/");
-    }
+    //if (!ListProvider.CheckIfListValid(listId, uniqueToken))
+    //{
+    //    Response.Redirect("~/");
+    //}
 
-    if (WebSecurity.IsAuthenticated && ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
-    {
-        listData = GiftProvider.GetById(listId);
-        isOwnerOfList = true;
-    }
+    //if (WebSecurity.IsAuthenticated && ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
+    //{
+    //    listData = GiftProvider.GetById(listId);
+    //    isOwnerOfList = true;
+    //}
 
-    if (!WebSecurity.IsAuthenticated || !ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
-    {
-        listData = GiftProvider.GetNotBoughtById(listId);
-    }
+    //if (!WebSecurity.IsAuthenticated || !ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
+    //{
+    //    listData = GiftProvider.GetNotBoughtById(listId);
+    //}
 
     var name = "";
     var price = "";
@@ -41,7 +41,7 @@
             var selectedGift = Request.Form["gift-id"];
             //var rememberme = Request.Form["gift-rememberme"];
 
-            GiftProvider.buyGiftById(giftName, selectedGift);
+            //GiftProvider.buyGiftById(giftName, selectedGift);
 
             Response.Redirect(Request.RawUrl);
         }
@@ -59,13 +59,13 @@
             store = Request.Form["new-store"];
             priority = Request.Form["new-priority"];
 
-            GiftProvider.addNewGift(listId, name, price, description, store, priority);
+            //GiftProvider.addNewGift(listId, name, price, description, store, priority);
 
             Response.Redirect(Request.RawUrl);
         }
         if (Request["button"] == "deleteList")
         {
-            ListProvider.deleteListById(listId);
+            //ListProvider.deleteListById(listId);
             Response.Redirect("~/Dashboard/ListsOverview");
         }
 
@@ -112,7 +112,7 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach (Gift data in listData)
+                    @*@foreach (Gift data in listData)
                     {
                             <tr>
                                 <td>@data.Priority</td>
@@ -141,7 +141,7 @@
                                     }
                                 </td>
                             </tr>
-                    }
+                    }*@
                 </tbody>
             </table>
         </div>

@@ -1,8 +1,12 @@
-﻿@{
+﻿@using DataObjects
+@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
     {
         Response.Redirect("~/");
     }

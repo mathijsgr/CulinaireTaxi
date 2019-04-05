@@ -12,35 +12,35 @@
     string uniqueToken = Request.QueryString["unique_token"];
     string giftId = Request.QueryString["giftId"];
 
-    if (!WebSecurity.IsAuthenticated || !ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
-    {
-        Response.Redirect("~/");
-    }
+    //if (!WebSecurity.IsAuthenticated || !ListProvider.CheckIfOwner(listId, uniqueToken, WebSecurity.CurrentUserId))
+    //{
+    //    Response.Redirect("~/");
+    //}
 
-    if (!IsPost)
-    {
-        if (!Request.QueryString["giftId"].IsEmpty() && Request.QueryString["giftId"].IsInt())
-        {
-            var giftData = GiftProvider.GetSingleById(giftId);
+    //if (!IsPost)
+    //{
+    //    if (!Request.QueryString["giftId"].IsEmpty() && Request.QueryString["giftId"].IsInt())
+    //    {
+    //        var giftData = GiftProvider.GetSingleById(giftId);
 
-            if (giftData != null)
-            {
-                name = giftData[0].GiftName;
-                price = giftData[0].GiftPrice;
-                description = giftData[0].Description;
-                store = giftData[0].Location;
-                priority = Convert.ToString(giftData[0].Priority);
-            }
-            else
-            {
-                Response.Redirect("~/");
-            }
-        }
-        else
-        {
-            Response.Redirect("~/");
-        }
-    }
+    //        if (giftData != null)
+    //        {
+    //            name = giftData[0].GiftName;
+    //            price = giftData[0].GiftPrice;
+    //            description = giftData[0].Description;
+    //            store = giftData[0].Location;
+    //            priority = Convert.ToString(giftData[0].Priority);
+    //        }
+    //        else
+    //        {
+    //            Response.Redirect("~/");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Response.Redirect("~/");
+    //    }
+    //}
 
     if (IsPost)
     {
@@ -58,18 +58,19 @@
             store = Request.Form["new-store"];
             priority = Request.Form["new-priority"];
 
-            if (Validation.IsValid())
-            {
-                GiftProvider.updateGift(giftId, name, price, description, store, priority);
-                Response.Redirect("~/Dashboard/ListDetails?list=" + listId + "&unique_token=" + uniqueToken);
-            }
-        }
-        else if (Request["button"] == "delete")
-        {
-            GiftProvider.deleteGiftById(giftId);
-            Response.Redirect("~/Dashboard/ListDetails?list=" + listId + "&unique_token=" + uniqueToken);
-        }
+            //    if (Validation.IsValid())
+            //    {
+            //        GiftProvider.updateGift(giftId, name, price, description, store, priority);
+            //        Response.Redirect("~/Dashboard/ListDetails?list=" + listId + "&unique_token=" + uniqueToken);
+            //    }
+            //}
+            //else if (Request["button"] == "delete")
+            //{
+            //    GiftProvider.deleteGiftById(giftId);
+            //    Response.Redirect("~/Dashboard/ListDetails?list=" + listId + "&unique_token=" + uniqueToken);
+            //}
 
+        }
     }
 }
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">

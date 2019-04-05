@@ -7,7 +7,7 @@
         Response.Redirect("~/");
     }
 
-    var userLists = ListProvider.GetListByOwnerId(WebSecurity.CurrentUserId);
+    //var userLists = ListProvider.GetListByOwnerId(WebSecurity.CurrentUserId);
 
     var name = "";
 
@@ -16,7 +16,7 @@
         Validation.RequireField("list-name", "Vul een naam in");
 
         name = Request.Form["list-name"];
-        ListProvider.addNewList(WebSecurity.CurrentUserId, name);
+        //ListProvider.addNewList(WebSecurity.CurrentUserId, name);
 
         Response.Redirect(Request.RawUrl);
     }
@@ -31,7 +31,7 @@
 </div>
 <div class="card-deck">
 
-    @foreach (var data in userLists)
+    @*@foreach (var data in userLists)
     {
         <div class="col-sm-4" style="margin-top:20px;">
             <div class="card">
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-    }
+    }*@
 </div>
 <!-- Modal -->
 <div class="modal fade" id="addList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
