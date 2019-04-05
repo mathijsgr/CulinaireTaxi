@@ -1,0 +1,115 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "Dashboard";
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4)
+    {
+        Response.Redirect("~/");
+    }
+
+    var taxiData = new List<TaxiCompany>();
+    var restaurantData = new List<Restaurant>();
+
+
+    TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+    taxiData = tQuery.GetAllNotValidatedCompanies();
+
+    RestaurantQuerys rQuery = new RestaurantQuerys();
+    restaurantData = rQuery.GetAllNotValidatedRestaurants();
+
+}
+<main>
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background1.jpg"></div>
+    </div>
+    <div class="container" style="min-height:600px">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h3><i class="mdi-content-send brown-text"></i></h3>
+                    <h4>Nieuwe aanmeldingen</h4>
+                </div>
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s6"><a class="active" href="#test1">Meldingen restauranten</a></li>
+                        <li class="tab col s6"><a href="#test2">Meldingen taxi's</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12 left">
+                    <ul class="collection">
+                        @foreach (var restaurant in restaurantData)
+                        {
+                        <li class="collection-item avatar">
+                            @if (restaurant.HasBeenValidated == 1)
+                            {
+                                <i class="material-icons circle red">restaurant</i>
+                                <span class="title">Afgekeurde restaurant: @restaurant.HasBeenValidated</span>
+                                <p>
+                                    Afgekeurde restaurant: @restaurant.RestaurantName (Wachten op aanpassing).
+                                </p>
+                            }
+                            else if (restaurant.HasBeenValidated == 2)
+                            {
+                                <i class="material-icons circle orange">restaurant</i>
+                                <span class="title">Herkeuring van restaurant: @restaurant.HasBeenValidated</span>
+                                <p>
+                                    Herkeuring van restaurant: @restaurant.RestaurantName.
+                                </p>
+                            }
+                            else
+                            {
+                                <i class="material-icons circle green">restaurant</i>
+                                <span class="title">Nieuw restaurant toegevoegd: @restaurant.HasBeenValidated</span>
+                                <p>
+                                    Nieuwe aanmelding van restaurant: @restaurant.RestaurantName.
+                                </p>
+                            }
+                            <a href="~/Dashboard/DashboardReviewRestaurant?type=restaurant&company=@restaurant.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+                <div id="test2" class="col s12 left">
+                    <ul class="collection">
+                        @foreach (var taxi in taxiData)
+                        {
+                        <li class="collection-item avatar">
+                            @if (taxi.HasBeenValidated == 1)
+                            {
+                                <i class="material-icons circle red">directions_car</i>
+                                <span class="title">Afgekeurde taxibedrijf: @taxi.HasBeenValidated</span>
+                                <p>
+                                    Afgekeurde taxibedrijf: @taxi.CompanyName (Wachten op aanpassing).
+                                </p>
+                            }
+                            else if (taxi.HasBeenValidated == 2)
+                            {
+                                <i class="material-icons circle orange">directions_car</i>
+                                <span class="title">Herkeuring van taxibedrijf: @taxi.HasBeenValidated</span>
+                                <p>
+                                    Herkeuring van taxibedrijf: @taxi.CompanyName.
+                                </p>
+                            }
+                            else
+                            {
+                                <i class="material-icons circle green">directions_car</i>
+                                <span class="title">Nieuw taxibedrijf toegevoegd: @taxi.HasBeenValidated</span>
+                                <p>
+                                    Nieuwe aanmelding van taxibedrijf: @taxi.CompanyName.
+                                </p>
+                            }
+                            <a href="~/Dashboard/DashboardReviewTaxi?type=taxi&company=@taxi.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                        </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background2.jpg"></div>
+    </div>
+</main>
+

@@ -2,17 +2,6 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
-    if (IsPost)
-    {
-
-        RestaurantQuerys test = new RestaurantQuerys();
-
-        test.AddRestaurant(WebSecurity.CurrentUserId.ToString(), "test", "1234AB", 12, "B", "Leeuwarden");
-
-        Response.Redirect(Request.RawUrl);
-
-    }
-
 }
 <div class="row">
     <div class="col s12">

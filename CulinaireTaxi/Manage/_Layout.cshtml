@@ -15,7 +15,13 @@
                         <div class="collection">
                             <a href="~/Manage" class="collection-item ">Reserveringen</a>
                             <a href="~/Manage/History" class="collection-item">Reserveringen historie</a>
-                            <a href="~/Manage/Details" class="collection-item">Uw bedrijfsgegevens</a>
+                            @if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                            {
+                                <a href="~/Manage/DetailsRestaurant" class="collection-item">Uw restaurant gegevens</a>
+                            } else
+                            {
+                                <a href="~/Manage/DetailsTaxi" class="collection-item">Uw taxi gegevens</a>
+                            }
                             <a href="~/Manage/Connections" class="collection-item">Gemaakte koppelingen</a>
                         </div>
                     </div>

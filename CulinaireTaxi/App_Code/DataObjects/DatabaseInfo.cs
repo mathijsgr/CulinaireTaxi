@@ -8,6 +8,6 @@ namespace CulinaireTaxi.App_Data.DataObjects
     public class DatabaseInfo
     {
         // Change this if the Database name changes
-        public string DatabaseName = "Database";
+        public static string DatabaseName = "Database";
     }
 }

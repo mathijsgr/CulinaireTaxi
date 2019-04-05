@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "Review Taxi";
+
+    string companyType = Request.QueryString["type"];
+    string companyId = Request.QueryString["company"];
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4 || companyId == null || companyType == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    TaxiCompanyQuerys taxiQuery = new TaxiCompanyQuerys();
+
+    var taxiData = taxiQuery.GetTaxiCompany(Convert.ToInt32(companyId));
+
+    if (companyType != "taxi" || taxiData == null)
+    {
+        Response.Redirect("~/");
+    }
+
+
+    if (IsPost)
+    {
+        if (Request["button"] == "accept")
+        {
+            taxiQuery.UpdateTaxiCompanyValidation(Convert.ToInt32(companyId), 3);
+            Response.Redirect("~/Dashboard");
+        }
+
+        if (Request["button"] == "decline")
+        {
+            taxiQuery.UpdateTaxiCompanyValidation(Convert.ToInt32(companyId), 1);
+            Response.Redirect("~/Dashboard");
+        }
+
+    }
+}
+<main>
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background1.jpg"></div>
+    </div>
+    <div class="container" style="min-height:600px">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center" style="margin-bottom:10px;">
+                    <h5>Review aanmelding taxibedrijf</h5>
+                </div>
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                    <div class="card-content">
+                                        <div class="row">
+                                            <div class="col s4 collection-item valign-wrapper">
+                                                <i class="material-icons small valign">directions_car</i>
+                                                <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Wat voor type aanmelding">Review aanmelding Taxibedrijf</span>
+                                            </div>
+                                            <div class="col s4 collection-item valign-wrapper">
+                                                <i class="material-icons small valign">account_circle</i>
+                                                <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">Naam: @taxiData.CompanyName</span>
+                                            </div>
+                                            <div class="col s4 collection-item valign-wrapper">
+                                                <i class="material-icons small valign">location_city</i>
+                                                <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">@taxiData.CompanyLocation</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class=" col s12">
+                                                <h5>Beschrijving restaurant</h5>
+                                                <p class="validate">@taxiData.Description</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="card-action">
+                                    <form method="post">
+                                        <button value="accept" name="button" type="submit" class="btn-flat" style="color:green">Aanmelding goedkeuren</button>
+                                        <button value="decline" name="button" type="submit" class="btn-flat right" style="color:red">Aanmelding afkeuren</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background2.jpg"></div>
+    </div>
+</main>

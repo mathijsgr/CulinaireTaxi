@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "Review Restaurant";
+
+    string companyType = Request.QueryString["type"];
+    string companyId = Request.QueryString["company"];
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4 || companyId == null || companyType == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    RestaurantQuerys rQuery = new RestaurantQuerys();
+
+    var restaurantData = rQuery.GetRestaurant(Convert.ToInt32(companyId));
+
+    if (companyType != "restaurant" || restaurantData == null)
+    {
+        Response.Redirect("~/");
+    }
+
+
+    if (IsPost)
+    {
+        if (Request["button"] == "accept")
+        {
+            rQuery.UpdateRestaurantValidation(Convert.ToInt32(companyId), 3);
+            Response.Redirect("~/Dashboard");
+        }
+
+        if (Request["button"] == "decline")
+        {
+            rQuery.UpdateRestaurantValidation(Convert.ToInt32(companyId), 1);
+            Response.Redirect("~/Dashboard");
+        }
+
+    }
+}
+<main>
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background1.jpg"></div>
+    </div>
+    <div class="container" style="min-height:600px">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center" style="margin-bottom:10px;">
+                    <h5>Review aanmelding restaurant</h5>
+                </div>
+                <div class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="row">
+                                        <div class="col s3 collection-item valign-wrapper">
+                                            <i class="material-icons small valign">restaurant</i>
+                                            <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Wat voor type aanmelding">Review aanmelding Restaurant</span>
+                                        </div>
+                                        <div class="col s3 collection-item valign-wrapper">
+                                            <i class="material-icons small valign">account_circle</i>
+                                            <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">@restaurantData.RestaurantName</span>
+                                        </div>
+                                        <div class="col s3 collection-item valign-wrapper">
+                                            <i class="material-icons small valign">location_city</i>
+                                            <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">@restaurantData.City</span>
+                                        </div>
+                                        <div class="col s3 collection-item valign-wrapper">
+                                            <i class="material-icons small valign">location_city</i>
+                                            <span class="dashboard-span tooltipped" data-position="top" data-tooltip="locatie van restaurant/taxibedrijf">@restaurantData.PostalCode, @restaurantData.HouseNumberPrefix @restaurantData.HouseNumber</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class=" col s12">
+                                            <h5>Beschrijving restaurant</h5>
+                                            <p class="validate">@restaurantData.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <form method="post">
+                                        <button value="accept" name="button" type="submit" class="btn-flat" style="color:green">Aanmelding goedkeuren</button>
+                                        <button value="decline" name="button" type="submit" class="btn-flat right" style="color:red">Aanmelding afkeuren</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background2.jpg"></div>
+    </div>
+</main>

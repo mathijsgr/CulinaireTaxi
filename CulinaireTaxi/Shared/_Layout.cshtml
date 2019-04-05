@@ -29,7 +29,7 @@
                 @*<li style="margin-left:40px"><partial name="~/Pages/Shared/_LoginPartial" /></li>*@
                 @if (WebSecurity.IsAuthenticated)
                 {
-                    <li><a href="~/Dashboard/Dashboard">Dashboard</a></li>
+                    <li><a href="~/Dashboard">Dashboard</a></li>
                     <li><a href="~/Manage">Bedrijf beheren</a></li>
                     <li><a class="email" href="~/Account" title="Profiel">@WebSecurity.CurrentUserName</a></li>
                     <li>

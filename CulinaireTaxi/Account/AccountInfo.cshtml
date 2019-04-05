@@ -1,0 +1,109 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    Page.Title = "Manage Account";
+
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/Account/Login");
+    }
+
+    UserInfoQuerys userinfoquery = new UserInfoQuerys();
+
+    var CurrentUserInfo = userinfoquery.GetUserInfo(WebSecurity.CurrentUserId.ToString());
+
+
+    if (IsPost)
+    {
+
+        Validation.RequireField("userinfo-firstname", "Vul een naam in");
+        Validation.RequireField("userinfo-prefix", "Vul een prijs in");
+        Validation.RequireField("userinfo-lastname", "Voer een descriptie in");
+        Validation.RequireField("userinfo-postalcode", "Vul een prioriteit in");
+        Validation.RequireField("userinfo-housenumber", "Vul een prioriteit in");
+        Validation.RequireField("userinfo-housenumberprefix", "Vul een prioriteit in");
+        Validation.RequireField("userinfo-city", "Vul een prioriteit in");
+
+        var FirstName = Request.Form["userinfo-firstname"];
+        var Prefix = Request.Form["userinfo-prefix"];
+        var LastName = Request.Form["userinfo-lastname"];
+        var PostalCode = Request.Form["userinfo-postalcode"];
+        var HouseNumber = Request.Form["userinfo-housenumber"];
+        var HouseNumberPrefix = Request.Form["userinfo-housenumberprefix"];
+        var City = Request.Form["userinfo-city"];
+
+
+        UserInfo userInfo = new UserInfo(CurrentUserInfo.Id, WebSecurity.CurrentUserId, FirstName, Prefix, LastName, PostalCode, Convert.ToInt32(HouseNumber) , HouseNumberPrefix, City, CurrentUserInfo.Role);
+
+        userinfoquery.EditUserInfo(userInfo);
+
+        Response.Redirect("~/Account/AccountInfo");
+    }
+
+}
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="col s12 center" style="margin-bottom:20px;">
+                                <h5>Persoonlijke gegevens bijwerken</h5>
+                        </div>
+                        <div class="row">
+                            <form class="col s12" method="post">
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input placeholder="Voornaam" name="userinfo-firstname" type="text" class="validate" value="@CurrentUserInfo.FirstName">
+                                        <label for="first_name">Voornaam</label>
+                                        @Html.ValidationMessage("userinfo-firstname")
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input placeholder="Tussenvoegsel" name="userinfo-prefix" type="text" class="validate" value="@CurrentUserInfo.Prefix">
+                                        <label for="last_name">Tussenvoegsel</label>
+                                        @Html.ValidationMessage("userinfo-prefix")
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input placeholder="Achternaam" name="userinfo-lastname" type="text" class="validate" value="@CurrentUserInfo.LastName">
+                                        <label for="password">Achternaam</label>
+                                        @Html.ValidationMessage("userinfo-lastname")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s3">
+                                        <input placeholder="Postcode" name="userinfo-postalcode" type="text" class="validate" value="@CurrentUserInfo.PostalCode">
+                                        <label for="password">Postcode</label>
+                                        @Html.ValidationMessage("userinfo-postalcode")
+                                    </div>
+                                    <div class="input-field col s3">
+                                        <input placeholder="Huisnummer" id="password" name="userinfo-housenumber" type="text" class="validate" value="@CurrentUserInfo.HouseNumber">
+                                        <label for="password">Huisnummer</label>
+                                        @Html.ValidationMessage("userinfo-housenumber")
+                                    </div>
+                                    <div class="input-field col s2">
+                                        <input placeholder="Huisnummer extra" name="userinfo-housenumberprefix" type="text" class="validate" value="@CurrentUserInfo.HouseNumberPrefix">
+                                        <label for="password">Huisnummer extra</label>
+                                        @Html.ValidationMessage("userinfo-housenumberprefix")
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input placeholder="Stad/Locatie" name="userinfo-city" type="text" class="validate" value="@CurrentUserInfo.City">
+                                        <label for="password">Stad/Locatie</label>
+                                        @Html.ValidationMessage("userinfo-city")
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" href="" class="btn-flat right" style="color:green">
+                                            <span>Gegevens bijwerken</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    Page.Title = "Manage Account";
+
+    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
+    {
+        Response.Redirect("~/");
+    }
+
+    var TaxiName = "";
+    var PostalCode = "";
+    var City = "";
+    var Description = "";
+
+    TaxiCompanyQuerys taxiquerys = new TaxiCompanyQuerys();
+
+    // Na het opsturen voor goedkeuring mag een bedrijf niet de gegevens bewerken totdat deze zijn goed of afgekeurd.
+    // Als een bedrijdf is goedgekeurd niet meer de ADD command uitvoeren maar de UPDATERestaurantValidated
+    bool IsValidated = false;
+    var currentTaxiInfo = taxiquerys.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
+
+    if (currentTaxiInfo != null)
+    {
+        IsValidated = true;
+        TaxiName = currentTaxiInfo.CompanyName;
+        City = currentTaxiInfo.CompanyLocation;
+        Description = currentTaxiInfo.Description;
+    }
+
+    if (IsPost)
+    {
+
+        Validation.RequireField("taxi-name", "voer een naam in");
+        Validation.RequireField("taxi-postalcode", "Voer een postcode in");
+        Validation.RequireField("taxi-city", "Voer een locatie in");
+        Validation.RequireField("taxi-description", "Voer een beschrijving in");
+
+        TaxiName = Request.Form["taxi-name"];
+        PostalCode = Request.Form["taxi-postalcode"];
+        City = Request.Form["taxi-city"];
+        Description = Request.Form["taxi-description"];
+
+        if (IsValidated)
+        {
+            TaxiCompany newRestaurantInfo = new TaxiCompany(currentTaxiInfo.Id, WebSecurity.CurrentUserId, TaxiName, City, Description, 3);
+            taxiquerys.EditTaxiCompany(newRestaurantInfo);
+            Response.Redirect("~/Manage");
+        }
+
+        taxiquerys.AddTaxiCompany(WebSecurity.CurrentUserId, TaxiName, City, Description);
+
+        Response.Redirect("~/Manage");
+    }
+
+}
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="col s12 center" style="margin-bottom:20px;">
+                            @if (IsValidated)
+                            {
+                                <h5>Bewerk uw bedrijfsgegevens</h5>
+                            }
+                            else
+                            {
+                                <h5>Voeg uw bedrijf toe aan de website</h5>
+                            }
+                        </div>
+                        <div class="row">
+                            <form class="col s12" method="post">
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input placeholder="Bedrijfsnaam" name="taxi-name" type="text" class="validate" value="@TaxiName">
+                                        <label for="first_name">Bedrijfsnaam</label>
+                                        @Html.ValidationMessage("taxi-name")
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input placeholder="Locatie" name="taxi-city" type="text" class="validate" value="@City">
+                                        <label for="last_name">Locatie</label>
+                                        @Html.ValidationMessage("taxi-city")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s3">
+                                        <input placeholder="Postcode" name="taxi-postalcode" type="text" class="validate" value="@PostalCode">
+                                        <label for="password">Postcode</label>
+                                        @Html.ValidationMessage("taxi-postalcode")
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea required placeholder="Definieer hier het contract  (max 160 characters)" id="textarea2" name="taxi-description" class="materialize-textarea" data-length="160">@Description</textarea>
+                                        <label for="textarea2">Voer een beschrijving in</label>
+                                        @Html.ValidationMessage("taxi-description")
+                                    </div>
+                                </div>
+                                <div class="card-action">
+                                    <button type="submit" href="" class="btn-flat right" style="color:green">
+                                        @if (IsValidated)
+                                        {
+                                            <span>Gegevens bijwerken</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Versturen voor goedkeuring</span>
+                                        }
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
