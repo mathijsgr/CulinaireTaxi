@@ -16,11 +16,11 @@ namespace Querys
         /// <param name="UserInfoId">user info id</param>
         /// <param name="AmountOfPersons">number of persons</param>
         /// <param name="Time">time</param>
-        public void AddReservation(int RestaurantId, int UserInfoId,int AmountOfPersons, string Time)
+        public void AddReservation(int RestaurantId, int UserInfoId, int AmountOfPersons, string Time)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "INSERT INTO RestaurantReservation (RestaurantId,UserInfoId,AmountOfPersons,Time) "
-                + "VALUES(@0,@1,@2)";
+                                   + "VALUES(@0,@1,@2)";
             db.QuerySingle(insertCommand, RestaurantId, UserInfoId, AmountOfPersons, Time);
             db.Close();
         }
@@ -36,7 +36,8 @@ namespace Querys
             string insertCommand = "SELECT * FROM RestaurantReservation WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date);
+            var reservering =
+                new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date);
             return reservering;
         }
 
@@ -54,9 +55,11 @@ namespace Querys
             List<RestaurantReservation> reserveringen = new List<RestaurantReservation>();
             foreach (var row in rows)
             {
-                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPersons, row.Date);
+                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId,
+                    row.AmountOfPersons, row.Date);
                 reserveringen.Add(reservering);
             }
+
             return reserveringen;
         }
 
@@ -74,9 +77,11 @@ namespace Querys
             List<RestaurantReservation> reserveringen = new List<RestaurantReservation>();
             foreach (var row in rows)
             {
-                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPersons, row.Date);
+                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId,
+                    row.AmountOfPersons, row.Date);
                 reserveringen.Add(reservering);
             }
+
             return reserveringen;
         }
 
@@ -89,7 +94,8 @@ namespace Querys
         {
             Database db = Database.Open(DatabaseName);
             var dbCommand = "UPDATE RestaurantReservation SET (AmountOfPersons = @1, Date = @2) WHERE Id = @0";
-            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons, restaurantReservation.Date);
+            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons,
+                restaurantReservation.Date);
             db.Close();
             return restaurantReservation;
         }
@@ -106,3 +112,4 @@ namespace Querys
             db.Close();
         }
     }
+}

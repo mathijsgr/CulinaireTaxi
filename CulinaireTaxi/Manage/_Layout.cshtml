@@ -20,7 +20,7 @@
                             @*<a href="~/Manage/History" class="collection-item">Reserveringen historie</a>*@
                         </div>
                         <div class="collection">
-                            @if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                            @if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
                             {
                                 <a href="~/Manage/DetailsRestaurant" class="collection-item">Uw restaurant gegevens</a>
                             }

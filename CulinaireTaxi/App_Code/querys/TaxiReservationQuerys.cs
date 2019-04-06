@@ -19,11 +19,11 @@ namespace Querys
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "INSERT INTO TaxiReservation (TaxiCompanyId,UserInfoId,Date) "
-                + "VALUES(@0,@1,@2)";
+                                   + "VALUES(@0,@1,@2)";
             db.QuerySingle(insertCommand, TaxiCompanyId, UserInfoId, Date);
             db.Close();
         }
-        
+
         /// <summary>
         /// gets a reservation by id
         /// </summary>
@@ -35,7 +35,7 @@ namespace Querys
             string insertCommand = "SELECT * FROM TaxiReservation WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var reservering = new TaxiReservation(row.Id,row.TaxiCompanyId, row.UserInfoId, row.Date);
+            var reservering = new TaxiReservation(row.Id, row.TaxiCompanyId, row.UserInfoId, row.Date);
             return reservering;
         }
 
@@ -53,9 +53,10 @@ namespace Querys
             List<TaxiReservation> reserveringen = new List<TaxiReservation>();
             foreach (var row in rows)
             {
-                var reservering = new TaxiReservation(row.Id,row.TaxiCompanyId, row.UserInfoId, row.Date);
+                var reservering = new TaxiReservation(row.Id, row.TaxiCompanyId, row.UserInfoId, row.Date);
                 reserveringen.Add(reservering);
             }
+
             return reserveringen;
         }
 
@@ -76,6 +77,7 @@ namespace Querys
                 var reservering = new TaxiReservation(row.Id, row.TaxiCompanyId, row.UserInfoId, row.Date);
                 reserveringen.Add(reservering);
             }
+
             return reserveringen;
         }
 
@@ -105,3 +107,4 @@ namespace Querys
             db.Close();
         }
     }
+}

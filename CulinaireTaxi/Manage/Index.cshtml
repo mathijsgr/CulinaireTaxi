@@ -1,13 +1,16 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Company";
+
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
 
     if (!WebSecurity.IsAuthenticated)
     {
         Response.Redirect("~/");
     }
 
-    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
 
 
 

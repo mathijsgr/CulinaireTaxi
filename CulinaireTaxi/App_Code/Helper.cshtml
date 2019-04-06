@@ -1,6 +1,6 @@
-﻿@using CulinaireTaxi.App_Data.DataObjects
-@using CulinaireTaxi.App_Data.querys
-@using System.Linq;
+﻿@using System.Linq;
+@using DataObjects
+@using Querys
 
 @helper RestaurantSearch(string search)
 {
@@ -85,7 +85,7 @@
 
     UserInfoQuerys uquerys = new UserInfoQuerys();
 
-    var uInfo = uquerys.GetUserInfo(UserId);
+    var uInfo = uquerys.GetUserInfo(UserId.ToString());
 
     List<RestaurantReservation> reservations = querys.GetAllReservationsFromUser(uInfo.Id);
 
@@ -117,7 +117,7 @@
 
     UserInfoQuerys uquerys = new UserInfoQuerys();
 
-    var uInfo = uquerys.GetUserInfo(UserId);
+    var uInfo = uquerys.GetUserInfo(UserId.ToString());
 
     List<TaxiReservation> reservations = querys.GetAllReservationsFromUser(uInfo.Id);
 

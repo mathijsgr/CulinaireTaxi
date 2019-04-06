@@ -1,10 +1,13 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
     string contractId = Request.QueryString["contract"];
 
-    if (!WebSecurity.IsAuthenticated || (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2 && UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3) || contractId == null)
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2 && userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3) || contractId == null)
     {
         Response.Redirect("~/");
     }
@@ -13,7 +16,7 @@
     RestaurantQuerys rQuery = new RestaurantQuerys();
     TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
 
-    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
     var contractData = contractQuery.GetContract(Convert.ToInt32(contractId));
 
     if (contractData == null || (userRole == 3 && rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId).Id != contractData.RestaurantId))

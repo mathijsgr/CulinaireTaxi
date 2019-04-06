@@ -37,7 +37,7 @@
         /// <param name="RestaurantId">restaurant id</param>
         /// <param name="UserInfoId">user info id</param>
         /// <param name="AmountOfPersons">amount of persons</param>
-        /// <param name="Time">time</param>
+        /// <param name="Date">Date</param>
         public RestaurantReservation(int Id, int RestaurantId,int UserInfoId, int AmountOfPersons, string Date)
         {
             this.Id = Id;

@@ -23,7 +23,7 @@
         /// <summary>
         /// time
         /// </summary>
-        public string Time { get; private set; }
+        public string Date { get; private set; }
 
 
         /// <summary>
@@ -32,8 +32,8 @@
         /// <param name="Id">id</param>
         /// <param name="TaxiCompanyId">taxi company id</param>
         /// <param name="UserInfoId">user info id</param>
-        /// <param name="Time">time</param>
-        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Time)
+        /// <param name="Date">Date</param>
+        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Date)
         {
             this.Id = Id;
             this.TaxiCompanyId = TaxiCompanyId;

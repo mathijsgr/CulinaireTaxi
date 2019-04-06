@@ -4,12 +4,14 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Connections";
 
-    if (!WebSecurity.IsAuthenticated || (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2 && UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3))
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2 && userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3))
     {
         Response.Redirect("~/");
     }
 
-    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
 
     int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
     var taxiData = new List<TaxiCompany>();

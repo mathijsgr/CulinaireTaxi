@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Querys
+@{
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -28,11 +32,11 @@
               
                 @if (WebSecurity.IsAuthenticated)
                 {
-                    if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                    if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
                     {
                         <li><a href="~/Manage">Bedrijf beheren</a></li>
                     }
-                    else if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
+                    else if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
                     {
                         <li><a href="~/Dashboard">Dashboard</a></li>
 
@@ -58,11 +62,11 @@
                 <li><a href="/Taxi">Taxi's</a></li>
                 @if (WebSecurity.IsAuthenticated)
                 {
-                    if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                    if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
                     {
                         <li><a href="~/Manage">Bedrijf beheren</a></li>
                     }
-                    else if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
+                    else if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
                     {
                         <li><a href="~/Dashboard">Dashboard</a></li>
 
