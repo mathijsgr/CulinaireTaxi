@@ -1,9 +1,9 @@
 ﻿@{
     Layout = "~/Shared/_Layout.cshtml";
-    Page.Title = "Restaurant overzicht";
+    Page.Title = "Taxi overzicht";
 
-    RestaurantQuerys rQuery = new RestaurantQuerys();
-    var restaurants = rQuery.GetAllRestaurants();
+    TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+    var taxis = tQuery.GetAllCompanies();
 }
 <main>
     <div class="parallax-container valign-wrapper">
@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col s12 center">
                     <h3><i class="mdi-content-send brown-text"></i></h3>
-                    <h4>Restauranten Overzicht</h4>
+                    <h4>Taxi's Overzicht</h4>
                 </div>
             </div>
             <div class="row">
@@ -29,22 +29,23 @@
                 </form>
             </div>
             <div class="row">
-                @foreach (var restaurant in restaurants)
+                @foreach (var taxi in taxis)
                 {
                     <div class="col s3">
                         <div class="card medium">
                             <div class="card-image">
-                                <img src="~/Assets/img/restaurant_stock.jpg">
-                                <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">@restaurant.RestaurantName<i class="small material-icons right">star</i></span>
+                                <img src="~/Assets/img/taxi_stock.jpg">
+                                <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">@taxi.CompanyName</span>
+
                             </div>
                             <div class="card-content">
                                 <p>
-                                    @restaurant.Description <br />
-                                    @restaurant.City @restaurant.PostalCode
+                                    @taxi.Description <br />
+                                    @taxi.CompanyLocation
                                 </p>
                             </div>
                             <div class="card-action">
-                                <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">shopping_cart</i>Reserveren</a>
+                                <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">local_taxi</i>Taxi boeken</a>
                             </div>
                         </div>
                     </div>
@@ -53,6 +54,6 @@
         </div>
     </div>
     <div class="parallax-container valign-wrapper">
-        <div class="parallax"><img src="~/Assets/img/background2.jpg"></div>
+        <div class="parallax"><img src="~/Assets/img/background2.jpg" alt="Unsplashed background img 3"></div>
     </div>
 </main>
