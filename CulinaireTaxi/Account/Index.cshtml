@@ -7,6 +7,8 @@
         Response.Redirect("~/");
     }
 
+    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+
 }
 <div class="row">
     <div class="col s12">
@@ -19,17 +21,25 @@
                         </div>
                         <div class="row">
                             <div id="test1" class="col s12 left">
-                                <ul class="collection">
+                                @if (userRole == 1)
+                                {
+                                    <ul class="collection">
 
-                                    @Helper.NotificationRestaurantBlock(WebSecurity.CurrentUserId)
+                                        @Helper.NotificationRestaurantBlock(WebSecurity.CurrentUserId)
 
-                                </ul>
+                                    </ul>
 
-                                <ul class="collection">
+                                    <ul class="collection">
 
-                                    @Helper.NotificationTaxiBlock(WebSecurity.CurrentUserId)
+                                        @Helper.NotificationTaxiBlock(WebSecurity.CurrentUserId)
 
-                                </ul>
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <p style="text-align:center;"><strong>Als bedrijf kunt u uw reserveringen vinden in "bedrijf beheren".</strong></p>
+                                }
+
                             </div>
                         </div>
                     </div>
