@@ -1,6 +1,15 @@
 ﻿@{
     Layout = "_Layout.cshtml";
-    Page.Title = "Manage Account";
+    Page.Title = "Manage Company";
+
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/");
+    }
+
+    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+
+
 
 }
 <div class="row">
@@ -15,30 +24,16 @@
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">restaurant</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">restaurant</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">restaurant</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
+                                    @if (userRole == 2)
+                                    {
+                                        @Helper.NotificationTaxiOwnerBlock(WebSecurity.CurrentUserId)
+
+                                    }
+                                    else if (userRole == 3)
+                                    {
+                                        @Helper.NotificationRestaurantOwnerBlock(WebSecurity.CurrentUserId)
+
+                                    }
                                 </ul>
                             </div>
                         </div>

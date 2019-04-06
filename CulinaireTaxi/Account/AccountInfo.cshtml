@@ -9,7 +9,7 @@
 
     UserInfoQuerys userinfoquery = new UserInfoQuerys();
 
-    var CurrentUserInfo = userinfoquery.GetUserInfo(WebSecurity.CurrentUserId.ToString());
+    var CurrentUserInfo = userinfoquery.GetUserInfo(WebSecurity.CurrentUserId);
 
 
     if (IsPost)

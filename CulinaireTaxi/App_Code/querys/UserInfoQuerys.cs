@@ -12,7 +12,7 @@ using WebMatrix.Data;
             db.Close();
         }
 
-        public UserInfo GetUserInfo (string Id)
+        public UserInfo GetUserInfo (int Id)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand = "SELECT * FROM UserInfo WHERE UserId = @0";

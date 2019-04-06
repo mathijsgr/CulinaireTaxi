@@ -2,6 +2,10 @@
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
+    if (!WebSecurity.IsAuthenticated)
+    {
+        Response.Redirect("~/");
+    }
 
 }
 <div class="row">
@@ -11,35 +15,20 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="col s12 center" style="margin-bottom:20px;">
-                            <h5>Uw actieve reserveringen</h5>
+                            <h5>Overzicht van uw reserveringen</h5>
                         </div>
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">directions_car</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">directions_car</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
-                                    <li class="collection-item avatar">
-                                        <i class="material-icons circle green">restaurant</i>
-                                        <span class="title">Nieuw reservering</span>
-                                        <p>
-                                            Er is een nieuwe reservering geplaatst.
-                                        </p>
-                                        <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                    </li>
+
+                                    @Helper.NotificationRestaurantBlock(WebSecurity.CurrentUserId)
+
+                                </ul>
+
+                                <ul class="collection">
+
+                                    @Helper.NotificationTaxiBlock(WebSecurity.CurrentUserId)
+
                                 </ul>
                             </div>
                         </div>
