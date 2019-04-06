@@ -25,6 +25,7 @@
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Restaurants">Restauranten</a></li>
                 <li><a href="/Taxi">Taxi's</a></li>
+              
                 @if (WebSecurity.IsAuthenticated)
                 {
                     if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
@@ -52,6 +53,7 @@
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
+
                 <li><a href="/Restaurants">Restauranten</a></li>
                 <li><a href="/Taxi">Taxi's</a></li>
                 @if (WebSecurity.IsAuthenticated)
@@ -78,6 +80,7 @@
                     <li><a href="~/Account/Register">Registreren</a></li>
                     <li><a href="~/Account/Login">Inloggen</a></li>
                 }
+
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>
