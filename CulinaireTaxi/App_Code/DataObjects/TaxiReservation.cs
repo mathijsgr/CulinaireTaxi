@@ -1,18 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CulinaireTaxi.App_Data.DataObjects
+﻿namespace DataObjects
 {
+    /// <summary>
+    /// taxi reservation class
+    /// </summary>
     public class TaxiReservation
     {
+        /// <summary>
+        /// id
+        /// </summary>
         public int Id { get; private set; }
-        public int TaxiCompanyId { get; private set; }
-        public int UserInfoId { get; private set; }
-        public string Date { get; private set; }
 
-        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Date)
+        /// <summary>
+        /// taxi company id
+        /// </summary>
+        public int TaxiCompanyId { get; private set; }
+
+        /// <summary>
+        /// user info id
+        /// </summary>
+        public int UserInfoId { get; private set; }
+
+        /// <summary>
+        /// time
+        /// </summary>
+        public string Time { get; private set; }
+
+
+        /// <summary>
+        /// constructor for taxi reservation
+        /// </summary>
+        /// <param name="Id">id</param>
+        /// <param name="TaxiCompanyId">taxi company id</param>
+        /// <param name="UserInfoId">user info id</param>
+        /// <param name="Time">time</param>
+        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Time)
         {
             this.Id = Id;
             this.TaxiCompanyId = TaxiCompanyId;

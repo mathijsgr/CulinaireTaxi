@@ -1,10 +1,13 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
     string companyId = Request.QueryString["company"];
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3 || companyId == null)
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3 || companyId == null)
     {
         Response.Redirect("~/");
     }

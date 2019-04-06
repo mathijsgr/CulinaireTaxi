@@ -1,9 +1,20 @@
-﻿using CulinaireTaxi.App_Data.DataObjects;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DataObjects;
 using WebMatrix.Data;
 
+namespace Querys
+{
+    /// <summary>
+    /// taxi reservation querys
+    /// </summary>
     public class TaxiReservationQuerys : DatabaseInfo
     {
+        /// <summary>
+        /// add a taxi reservation
+        /// </summary>
+        /// <param name="TaxiCompanyId">taxi company id</param>
+        /// <param name="UserInfoId">user info id</param>
+        /// <param name="Date">time</param>
         public void AddReservation(int TaxiCompanyId, int UserInfoId, string Date)
         {
             Database db = Database.Open(DatabaseName);
@@ -13,16 +24,26 @@ using WebMatrix.Data;
             db.Close();
         }
         
+        /// <summary>
+        /// gets a reservation by id
+        /// </summary>
+        /// <param name="Id">id</param>
+        /// <returns>reservation</returns>
         public TaxiReservation GetReservation(int Id)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiReservation WHERE Id = @0 )";
+            string insertCommand = "SELECT * FROM TaxiReservation WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
             var reservering = new TaxiReservation(row.Id,row.TaxiCompanyId, row.UserInfoId, row.Date);
             return reservering;
         }
 
+        /// <summary>
+        /// gets all reservations from a user
+        /// </summary>
+        /// <param name="UserInfoId">user info id</param>
+        /// <returns>list of reservations</returns>
         public List<TaxiReservation> GetAllReservationsFromUser(int UserInfoId)
         {
             Database db = Database.Open(DatabaseName);
@@ -38,6 +59,11 @@ using WebMatrix.Data;
             return reserveringen;
         }
 
+        /// <summary>
+        /// gets all reservations from a taxi company
+        /// </summary>
+        /// <param name="TaxiCompanyId">taxi comapny id</param>
+        /// <returns>list of reservations</returns>
         public List<TaxiReservation> GetAllReservationsFromTaxiCompany(int TaxiCompanyId)
         {
             Database db = Database.Open(DatabaseName);
@@ -53,6 +79,11 @@ using WebMatrix.Data;
             return reserveringen;
         }
 
+        /// <summary>
+        /// edit a reservation
+        /// </summary>
+        /// <param name="taxiReservation">taxiReservation object</param>
+        /// <returns>taxi reservation</returns>
         public TaxiReservation EditReservation(TaxiReservation taxiReservation)
         {
             Database db = Database.Open(DatabaseName);
@@ -62,11 +93,15 @@ using WebMatrix.Data;
             return taxiReservation;
         }
 
+        /// <summary>
+        /// delete a reservation
+        /// </summary>
+        /// <param name="Id">id</param>
         public void DeleteReservation(int Id)
         {
             Database db = Database.Open(DatabaseName);
             var dbCommand = "DELETE FROM TaxiReservation WHERE Id = @0";
-            var row = db.QuerySingle(dbCommand, Id);
+            db.QuerySingle(dbCommand, Id);
             db.Close();
         }
     }

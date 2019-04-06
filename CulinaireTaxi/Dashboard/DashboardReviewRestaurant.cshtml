@@ -1,11 +1,14 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "~/Shared/_Layout.cshtml";
     Page.Title = "Review Restaurant";
 
     string companyType = Request.QueryString["type"];
     string companyId = Request.QueryString["company"];
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4 || companyId == null || companyType == null)
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4 || companyId == null || companyType == null)
     {
         Response.Redirect("~/");
     }
