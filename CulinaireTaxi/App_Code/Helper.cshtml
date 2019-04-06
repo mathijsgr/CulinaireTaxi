@@ -91,8 +91,8 @@
 
     if (reservations.Count != 0)
     {
-    foreach (RestaurantReservation reservation in reservations)
-    {
+        foreach (RestaurantReservation reservation in reservations)
+        {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">restaurant</i>
                 <span class="title">U heeft een restaurant reservering bij: Restaurant @reservation.RestaurantId</span>
@@ -123,8 +123,8 @@
 
     if (reservations.Count != 0)
     {
-    foreach (TaxiReservation reservation in reservations)
-    {
+        foreach (TaxiReservation reservation in reservations)
+        {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">directions_car</i>
                 <span class="title">U heeft een taxi reservering bij: Taxi @reservation.TaxiCompanyId</span>
@@ -151,27 +151,33 @@
 
     var restaurantData = rquerys.GetRestaurantByOwnerId(ownerId);
 
-    List<RestaurantReservation> reservations = querys.GetAllReservationsFromRestaurant(restaurantData.Id);
-
-    if (reservations.Count != 0)
+    if (restaurantData == null)
     {
-        foreach (RestaurantReservation reservation in reservations)
-        {
-            <li class="collection-item avatar">
-                <i class="material-icons circle green">restaurant</i>
-                <span class="title">Er is een nieuwe reservering geplaatst.</span>
-                <p>
-                    Reservering voor @reservation.AmountOfPersons personen, op de datum @reservation.Date.
-                </p>
-                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
-            </li>
-        }
+        <p style="text-align:center;"><strong>Voeg een bedrijf toe om meldingen te krijgen</strong></p>
     }
     else
     {
-        <p style="text-align:center;"><strong>U heeft nog geen restaurant reserveringen</strong></p>
-    }
+        List<RestaurantReservation> reservations = querys.GetAllReservationsFromRestaurant(restaurantData.Id);
 
+        if (reservations.Count != 0)
+        {
+            foreach (RestaurantReservation reservation in reservations)
+            {
+                <li class="collection-item avatar">
+                    <i class="material-icons circle green">restaurant</i>
+                    <span class="title">Er is een nieuwe reservering geplaatst.</span>
+                    <p>
+                        Reservering voor @reservation.AmountOfPersons personen, op de datum @reservation.Date.
+                    </p>
+                    @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+                </li>
+            }
+        }
+        else
+        {
+            <p style="text-align:center;"><strong>U heeft nog geen restaurant reserveringen</strong></p>
+        }
+    }
 }
 
 @helper NotificationTaxiOwnerBlock(int ownerId)
@@ -183,25 +189,31 @@
 
     var taxiData = tquerys.GetTaxiCompanyByOwnerId(ownerId);
 
-    List<TaxiReservation> reservations = querys.GetAllReservationsFromTaxiCompany(taxiData.Id);
-
-    if (reservations.Count != 0)
+    if (taxiData == null)
     {
-        foreach (TaxiReservation reservation in reservations)
-        {
-            <li class="collection-item avatar">
-                <i class="material-icons circle green">directions_car</i>
-                <span class="title">Er is een nieuwe reservering geplaatst.</span>
-                <p>
-                    Reservering voor @reservation.Date.
-                </p>
-                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
-            </li>
-        }
+        <p style="text-align:center;"><strong>Voeg een bedrijf toe om meldingen te krijgen</strong></p>
     }
     else
     {
-        <p style="text-align:center;"><strong>U heeft nog geen taxi reserveringen</strong></p>
-    }
+        List<TaxiReservation> reservations = querys.GetAllReservationsFromTaxiCompany(taxiData.Id);
 
+        if (reservations.Count != 0)
+        {
+            foreach (TaxiReservation reservation in reservations)
+            {
+                <li class="collection-item avatar">
+                    <i class="material-icons circle green">directions_car</i>
+                    <span class="title">Er is een nieuwe reservering geplaatst.</span>
+                    <p>
+                        Reservering voor @reservation.Date.
+                    </p>
+                    @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+                </li>
+            }
+        }
+        else
+        {
+            <p style="text-align:center;"><strong>U heeft nog geen taxi reserveringen</strong></p>
+        }
+    }
 }
