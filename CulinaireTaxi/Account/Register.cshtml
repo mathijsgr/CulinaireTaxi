@@ -12,6 +12,8 @@
     var email = "";
     var password = "";
     var confirmPassword = "";
+    int type = 0;
+    int id = 0;
 
     // Setup validation
     Validation.RequireField("email", "You must specify an email address.");
@@ -31,6 +33,7 @@
         email = Request.Form["email"];
         password = Request.Form["password"];
         confirmPassword = Request.Form["confirmPassword"];
+        type = Int32.Parse(Request.Form["type"]);
 
 
         // If all information is valid, create a new account
@@ -45,6 +48,23 @@
             {
                 // Insert email into the profile table
                 db.Execute("INSERT INTO UserProfile (Email) VALUES (@0)", email);
+
+
+                var query = db.Query("SELECT UserId FROM UserProfile WHERE LOWER(Email) = LOWER(@0)", email);
+
+
+                foreach (var row in query)
+                {
+                    id = row.UserId;
+                }
+
+                
+
+                db.Execute("INSERT INTO UserInfo (UserId, Role) VALUES (@0, @1)", id, type);
+
+
+
+
 
                 // Create and associate a new entry in the membership database.
                 // If successful, continue processing the request
@@ -125,6 +145,17 @@
                             <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" @Validation.For("confirmPassword") />
                             @* Write any password validation errors to the page *@
                             @Html.ValidationMessage("confirmPassword")
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select id="type" name="type">
+                                <option value="" disabled selected>Selecteer uw rol</option>
+                                <option value="1">Gebruiker</option>
+                                <option value="2">Restaurant</option>
+                                <option value="3">Taxi</option>
+                            </select>
+                            <label>Rol:</label>
                         </div>
                     </div>
 
