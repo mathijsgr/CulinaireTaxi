@@ -58,10 +58,18 @@
                     id = row.UserId;
                 }
 
-                
+
 
                 db.Execute("INSERT INTO UserInfo (UserId, Role) VALUES (@0, @1)", id, type);
 
+                if(type == 2)
+                {
+                    db.Execute("INSERT INTO Restaurant (OwnerId) VALUES (@0)", id);
+                }
+                else if(type == 3)
+                {
+                    db.Execute("INSERT INTO TaxiCompany (OwnerId) VALUES (@0)", id);
+                }
 
 
 
