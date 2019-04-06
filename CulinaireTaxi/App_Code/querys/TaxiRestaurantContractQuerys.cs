@@ -16,10 +16,10 @@ using WebMatrix.Data;
         public TaxiRestaurantContract GetContract(int Id)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE Id = @0)";
+            string insertCommand = "SELECT * FROM TaxiRestaurantContract WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-
+            if (row == null) return null;
             TaxiRestaurantContract contract = new TaxiRestaurantContract(row.Id, row.RestaurantId,row.TaxiCompanyId,row.ContractDescription);
             return contract;
         }

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using WebMatrix.Data;
 
-namespace CulinaireTaxi.App_Data.querys
-{
     public class RestaurantReservationQuerys : DatabaseInfo
     {
         public void AddReservation(int RestaurantId, int UserInfoId,int AmountOfPerons, string Time)
@@ -21,20 +19,20 @@ namespace CulinaireTaxi.App_Data.querys
             string insertCommand = "SELECT * FROM RestaurantReservation WHERE Id = @0)";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Time);
+            var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date);
             return reservering;
         }
 
         public List<RestaurantReservation> GetAllReservationsFromUser(int UserInfoId)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM RestaurantReservation WHERE UserInfoId = @0)";
+            string insertCommand = "SELECT * FROM RestaurantReservation WHERE UserInfoId = @0";
             var rows = db.Query(insertCommand, UserInfoId);
             db.Close();
             List<RestaurantReservation> reserveringen = new List<RestaurantReservation>();
             foreach (var row in rows)
             {
-                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Time);
+                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPersons, row.Date);
                 reserveringen.Add(reservering);
             }
             return reserveringen;
@@ -43,13 +41,13 @@ namespace CulinaireTaxi.App_Data.querys
         public List<RestaurantReservation> GetAllReservationsFromRestaurant(int RestaurantId)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM RestaurantReservation WHERE RestaurantId = @0)";
+            string insertCommand = "SELECT * FROM RestaurantReservation WHERE RestaurantId = @0";
             var rows = db.Query(insertCommand, RestaurantId);
             db.Close();
             List<RestaurantReservation> reserveringen = new List<RestaurantReservation>();
             foreach (var row in rows)
             {
-                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Time);
+                var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPersons, row.Date);
                 reserveringen.Add(reservering);
             }
             return reserveringen;
@@ -58,8 +56,8 @@ namespace CulinaireTaxi.App_Data.querys
         public RestaurantReservation EditReservation(RestaurantReservation restaurantReservation)
         {
             Database db = Database.Open(DatabaseName);
-            var dbCommand = "UPDATE RestaurantReservation SET (AmountOfPersons = @1, Time = @2) WHERE Id = @0";
-            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons, restaurantReservation.Time);
+            var dbCommand = "UPDATE RestaurantReservation SET (AmountOfPersons = @1, Date = @2) WHERE Id = @0";
+            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons, restaurantReservation.Date);
             db.Close();
             return restaurantReservation;
         }
@@ -72,4 +70,3 @@ namespace CulinaireTaxi.App_Data.querys
             db.Close();
         }
     }
-}
