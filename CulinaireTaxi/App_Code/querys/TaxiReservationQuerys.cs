@@ -4,12 +4,12 @@ using WebMatrix.Data;
 
     public class TaxiReservationQuerys : DatabaseInfo
     {
-        public void AddReservation(int TaxiCompanyId, int UserInfoId, string Time)
+        public void AddReservation(int TaxiCompanyId, int UserInfoId, string Date)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "INSERT INTO TaxiReservation (TaxiCompanyId,UserInfoId,Time) "
+            string insertCommand = "INSERT INTO TaxiReservation (TaxiCompanyId,UserInfoId,Date) "
                 + "VALUES(@0,@1,@2)";
-            db.QuerySingle(insertCommand, TaxiCompanyId, UserInfoId, Time);
+            db.QuerySingle(insertCommand, TaxiCompanyId, UserInfoId, Date);
             db.Close();
         }
         
@@ -19,7 +19,7 @@ using WebMatrix.Data;
             string insertCommand = "SELECT * FROM TaxiReservation WHERE Id = @0 )";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var reservering = new TaxiReservation(row.Id,row.TaxiCompanyId, row.UserInfoId, row.Time);
+            var reservering = new TaxiReservation(row.Id,row.TaxiCompanyId, row.UserInfoId, row.Date);
             return reservering;
         }
 
@@ -56,8 +56,8 @@ using WebMatrix.Data;
         public TaxiReservation EditReservation(TaxiReservation taxiReservation)
         {
             Database db = Database.Open(DatabaseName);
-            var dbCommand = "UPDATE TaxiReservation SET (Time = @1) WHERE Id = @0";
-            var row = db.QuerySingle(dbCommand, taxiReservation.Id, taxiReservation.Time);
+            var dbCommand = "UPDATE TaxiReservation SET (Date = @1) WHERE Id = @0";
+            var row = db.QuerySingle(dbCommand, taxiReservation.Id, taxiReservation.Date);
             db.Close();
             return taxiReservation;
         }

@@ -19,7 +19,7 @@ using WebMatrix.Data;
             string insertCommand = "SELECT * FROM RestaurantReservation WHERE Id = @0)";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Time);
+            var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date);
             return reservering;
         }
 
@@ -56,8 +56,8 @@ using WebMatrix.Data;
         public RestaurantReservation EditReservation(RestaurantReservation restaurantReservation)
         {
             Database db = Database.Open(DatabaseName);
-            var dbCommand = "UPDATE RestaurantReservation SET (AmountOfPersons = @1, Time = @2) WHERE Id = @0";
-            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons, restaurantReservation.Time);
+            var dbCommand = "UPDATE RestaurantReservation SET (AmountOfPersons = @1, Date = @2) WHERE Id = @0";
+            var row = db.QuerySingle(dbCommand, restaurantReservation.Id, restaurantReservation.AmountOfPersons, restaurantReservation.Date);
             db.Close();
             return restaurantReservation;
         }

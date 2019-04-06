@@ -95,17 +95,17 @@
     {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">restaurant</i>
-                <span class="title">@reservation.RestaurantId</span>
+                <span class="title">U heeft een restaurant reservering bij: Restaurant @reservation.RestaurantId</span>
                 <p>
-                    U heeft een reservering voor @reservation.AmountOfPersons.
+                    U heeft een reservering voor @reservation.AmountOfPersons personen.
                 </p>
-                <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
             </li>
         }
     }
     else
     {
-        <p style="text-align:center;"><strong>U heeft nog geen reserveringen</strong></p>
+        <p style="text-align:center;"><strong>U heeft nog geen restaurant reserveringen</strong></p>
     }
 
 }
@@ -127,11 +127,11 @@
     {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">directions_car</i>
-                <span class="title">@reservation.TaxiCompanyId</span>
+                <span class="title">U heeft een taxi reservering bij: Taxi @reservation.TaxiCompanyId</span>
                 <p>
-                    U heeft een reservering voor @reservation.Time.
+                    U wordt opgehaald om: @reservation.Date.
                 </p>
-                <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
             </li>
         }
     }
@@ -159,11 +159,11 @@
         {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">restaurant</i>
-                <span class="title">@reservation.RestaurantId</span>
+                <span class="title">Er is een nieuwe reservering geplaatst.</span>
                 <p>
-                    U heeft een reservering voor @reservation.AmountOfPersons.
+                    Reservering voor @reservation.AmountOfPersons personen, op de datum @reservation.Date.
                 </p>
-                <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
             </li>
         }
     }
@@ -191,17 +191,17 @@
         {
             <li class="collection-item avatar">
                 <i class="material-icons circle green">directions_car</i>
-                <span class="title">@reservation.TaxiCompanyId</span>
+                <span class="title">Er is een nieuwe reservering geplaatst.</span>
                 <p>
-                    U heeft een reservering voor @reservation.Time.
+                    Reservering voor @reservation.Date.
                 </p>
-                <a href="" class="secondary-content"><i class="small material-icons">forward</i></a>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
             </li>
         }
     }
     else
     {
-        <p style="text-align:center;"><strong>U heeft nog geen reserveringen</strong></p>
+        <p style="text-align:center;"><strong>U heeft nog geen taxi reserveringen</strong></p>
     }
 
 }

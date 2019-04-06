@@ -10,14 +10,14 @@ namespace CulinaireTaxi.App_Data.DataObjects
         public int Id { get; private set; }
         public int TaxiCompanyId { get; private set; }
         public int UserInfoId { get; private set; }
-        public string Time { get; private set; }
+        public string Date { get; private set; }
 
-        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Time)
+        public TaxiReservation(int Id, int TaxiCompanyId, int UserInfoId, string Date)
         {
             this.Id = Id;
             this.TaxiCompanyId = TaxiCompanyId;
             this.UserInfoId = UserInfoId;
-            this.Time = Time;
+            this.Date = Date;
         }
     }
 }
