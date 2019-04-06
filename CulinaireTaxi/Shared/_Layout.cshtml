@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Querys
+@{
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -24,34 +28,63 @@
             <a href="~/" id="logo-container" class="brand-logo">CulinaireTaxi</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/Restaurants">Restauranten</a></li>
-                <li><a href="/Contact">Taxi's</a></li>
-
-                @*<li style="margin-left:40px"><partial name="~/Pages/Shared/_LoginPartial" /></li>*@
+                <li><a href="/Taxi">Taxi's</a></li>
+              
                 @if (WebSecurity.IsAuthenticated)
                 {
-                    <li><a href="~/Dashboard">Dashboard</a></li>
-                    <li><a href="~/Manage">Bedrijf beheren</a></li>
+                    if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                    {
+                        <li><a href="~/Manage">Bedrijf beheren</a></li>
+                    }
+                    else if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
+                    {
+                        <li><a href="~/Dashboard">Dashboard</a></li>
+
+                    }
                     <li><a class="email" href="~/Account" title="Profiel">@WebSecurity.CurrentUserName</a></li>
                     <li>
                         <form id="logoutForm" action="~/Account/Logout" method="post">
                             @AntiForgery.GetHtml()
-                            <a href="javascript:document.getElementById('logoutForm').submit()">Log out</a>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Uitloggen</a>
                         </form>
                     </li>
-
                 }
                 else
                 {
-                    <li><a href="~/Account/Register">Register</a></li>
-                    <li><a href="~/Account/Login">Log in</a></li>
+                    <li><a href="~/Account/Register">Registreren</a></li>
+                    <li><a href="~/Account/Login">Inloggen</a></li>
                 }
             </ul>
 
             <ul id="nav-mobile" class="sidenav">
-                <li><a asp-page="/Restaurants">Restauranten</a></li>
-                <li><a asp-page="/About">Taxi's</a></li>
-                <li><a asp-page="/Contact">Contact</a></li>
-                <partial name="_LoginPartial" />
+
+                <li><a href="/Restaurants">Restauranten</a></li>
+                <li><a href="/Taxi">Taxi's</a></li>
+                @if (WebSecurity.IsAuthenticated)
+                {
+                    if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 2 || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                    {
+                        <li><a href="~/Manage">Bedrijf beheren</a></li>
+                    }
+                    else if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 4)
+                    {
+                        <li><a href="~/Dashboard">Dashboard</a></li>
+
+                    }
+                    <li><a class="email" href="~/Account" title="Profiel">@WebSecurity.CurrentUserName</a></li>
+                    <li>
+                        <form id="logoutForm" action="~/Account/Logout" method="post">
+                            @AntiForgery.GetHtml()
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Uitloggen</a>
+                        </form>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="~/Account/Register">Registreren</a></li>
+                    <li><a href="~/Account/Login">Inloggen</a></li>
+                }
+
             </ul>
             <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>

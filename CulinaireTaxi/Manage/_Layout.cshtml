@@ -1,5 +1,8 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "~/Shared/_Layout.cshtml";
+
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
 }
 
 <main>
@@ -14,11 +17,14 @@
                     <div class="col m3">
                         <div class="collection">
                             <a href="~/Manage" class="collection-item ">Reserveringen</a>
-                            <a href="~/Manage/History" class="collection-item">Reserveringen historie</a>
-                            @if (UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
+                            @*<a href="~/Manage/History" class="collection-item">Reserveringen historie</a>*@
+                        </div>
+                        <div class="collection">
+                            @if (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) == 3)
                             {
                                 <a href="~/Manage/DetailsRestaurant" class="collection-item">Uw restaurant gegevens</a>
-                            } else
+                            }
+                            else
                             {
                                 <a href="~/Manage/DetailsTaxi" class="collection-item">Uw taxi gegevens</a>
                             }

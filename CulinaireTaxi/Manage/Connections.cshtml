@@ -1,4 +1,6 @@
-﻿@{
+﻿@using DataObjects
+@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
@@ -7,7 +9,9 @@
         Response.Redirect("~/");
     }
 
-    int userRole = UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
     TaxiRestaurantContractQuerys contractQuery = new TaxiRestaurantContractQuerys();
 
     var contractsData = new List<TaxiRestaurantContract>();
@@ -47,7 +51,7 @@
                                             <p>
                                                 Uw contract met bedrijf.
                                             </p>
-                                            <a href="~/Manage/ConnectionsDetails" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                            <a href="~/Manage/ConnectionsDetails?contract=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
                                         </li>
                                     }
                                 </ul>
@@ -56,11 +60,11 @@
                         <div class="card-action">
                             @if (userRole == 2)
                             {
-                                <a href="~/Manage/ConnectionsAdd">Nieuwe koppeling met Taxibedrijf</a>
+                                <a href="~/Manage/ConnectionsAddOverview">Nieuwe koppeling met Restaurant</a>
                             }
                             else if (userRole == 3)
                             {
-                                <a href="~/Manage/ConnectionsAdd">Nieuwe koppeling met Restaurant</a>
+                                <a href="~/Manage/ConnectionsAddOverview">Nieuwe koppeling met Taxibedrijf</a>
 
                             }
                         </div>

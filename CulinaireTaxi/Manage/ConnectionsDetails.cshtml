@@ -1,8 +1,37 @@
-﻿@{
+﻿@using Querys
+@{
     Layout = "_Layout.cshtml";
     Page.Title = "Manage Account";
 
+    string contractId = Request.QueryString["contract"];
 
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || (userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2 && userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3) || contractId == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    TaxiRestaurantContractQuerys contractQuery = new TaxiRestaurantContractQuerys();
+    RestaurantQuerys rQuery = new RestaurantQuerys();
+    TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+
+    int userRole = userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId);
+    var contractData = contractQuery.GetContract(Convert.ToInt32(contractId));
+
+    if (contractData == null || (userRole == 3 && rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId).Id != contractData.RestaurantId))
+    {
+        Response.Redirect("~/");
+    } else if (contractData == null || userRole == 2 && tQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId).Id != contractData.TaxiCompanyId)
+    {
+        Response.Redirect("~/");
+    }
+
+    if (IsPost)
+    {
+        contractQuery.DeleteContract(contractData.Id);
+        Response.Redirect("~/Manage/Connections");
+    }
 }
 <div class="row">
     <div class="col s12">
@@ -14,22 +43,26 @@
                             <div class="row">
                                 <div class="col s6 collection-item valign-wrapper">
                                     <i class="material-icons small valign">restaurant</i>
-                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Wat voor type aanmelding">Aanmelding nieuw restaurant</span>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Wat voor type aanmelding">Restaurant: @contractData.RestaurantId</span>
                                 </div>
                                 <div class="col s6 collection-item valign-wrapper">
                                     <i class="material-icons small valign">account_circle</i>
-                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">Patatzaak patatje</span>
+                                    <span class="dashboard-span tooltipped" data-position="top" data-tooltip="Naam van restaurant/taxibedrijf">Taxibedrijf: @contractData.TaxiCompanyId</span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class=" col s12">
                                     <h5>Beschrijving Contract</h5>
-                                    <p class="validate">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et finibus erat. In tempor dapibus pulvinar. Sed vitae urna ac magna ultrices condimentum. Nullam volutpat vel ligula sed posuere. Proin nec imperdiet leo, nec tempus nunc. Suspendisse sit amet ullamcorper dolor. Proin sagittis ullamcorper velit vitae venenatis. Proin cursus nulla sit amet bibendum rutrum. Quisque porta gravida nisl aliquam posuere. Aenean gravida erat quam, sit amet hendrerit felis auctor vitae. Proin leo dui, congue tincidunt velit vel, semper tincidunt risus. Aliquam elementum vulputate lectus nec suscipit. Phasellus vehicula purus quis rhoncus pharetra. Morbi et orci tempor, ornare nisl nec, ullamcorper risus.</p>
+                                    <p class="validate">@contractData.ContractDescription</p>
                                 </div>
                             </div>
                         </div>
                         <div class="card-action">
-                            <a href="" class="right" style="color:red">Contract verwijderen</a>
+                            <form method="post">
+                                <button type="submit" class="btn-flat right" style="color:red">
+                                    <span>Contract verwijderen</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

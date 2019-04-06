@@ -1,8 +1,12 @@
-﻿@{
+﻿@using DataObjects
+@using Querys
+@{
     Layout = "~/Shared/_Layout.cshtml";
     Page.Title = "Dashboard";
 
-    if (!WebSecurity.IsAuthenticated || UserInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4)
+    UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
+
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 4)
     {
         Response.Redirect("~/");
     }

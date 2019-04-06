@@ -1,0 +1,207 @@
+﻿@using System.Linq;
+@using DataObjects
+@using Querys
+
+@helper RestaurantSearch(string search)
+{
+    RestaurantQuerys querys = new RestaurantQuerys();
+
+    List<Restaurant> restaurants = querys.GetAllRestaurants();
+
+    var result = restaurants
+        .Where(t =>
+            t.City.Equals(search) ||
+            t.PostalCode.Equals(search) ||
+            t.RestaurantName.Contains(search) ||
+            t.Description.Contains(search))
+        .ToList();
+
+    foreach (Restaurant res in result)
+    {
+        <div class="col s2">
+            <div class="card medium">
+                <div class="card-image">
+                    <img src="https://via.placeholder.com/400x300">
+                    <span class="card-title">@res.RestaurantName</span>
+                </div>
+                <div class="card-content">
+                    <p>
+                        Locatie: <br>
+                        @res.City <br>
+                        @res.PostalCode <br>
+                        @res.HouseNumber @res.HouseNumberPrefix <br>
+                        Extra informatie: <br>
+                        @res.Description <br>
+
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">shopping_cart</i>Reserveren</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@helper TaxiSearch(string search)
+{
+    TaxiCompanyQuerys querys = new TaxiCompanyQuerys();
+
+    List<TaxiCompany> taxis = querys.GetAllCompanies();
+
+    var result = taxis
+        .Where(t =>
+            t.CompanyLocation.Equals(search) ||
+            t.CompanyName.Contains(search))
+        .ToList();
+
+    foreach (TaxiCompany company in result)
+    {
+        <div class="col s2">
+            <div class="card medium">
+                <div class="card-image">
+                    <img src="https://via.placeholder.com/400x300">
+                    <span class="card-title">@company.CompanyName</span>
+                </div>
+                <div class="card-content">
+                    <p>
+                        Locatie: <br>
+                        @company.CompanyLocation <br>
+                    </p>
+                </div>
+                <div class="card-action">
+                    <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">shopping_cart</i>Reserveren</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@helper NotificationRestaurantBlock(int UserId)
+{
+
+    RestaurantReservationQuerys querys = new RestaurantReservationQuerys();
+
+    UserInfoQuerys uquerys = new UserInfoQuerys();
+
+    var uInfo = uquerys.GetUserInfo(UserId.ToString());
+
+    List<RestaurantReservation> reservations = querys.GetAllReservationsFromUser(uInfo.Id);
+
+    if (reservations.Count != 0)
+    {
+    foreach (RestaurantReservation reservation in reservations)
+    {
+            <li class="collection-item avatar">
+                <i class="material-icons circle green">restaurant</i>
+                <span class="title">U heeft een restaurant reservering bij: Restaurant @reservation.RestaurantId</span>
+                <p>
+                    U heeft een reservering voor @reservation.AmountOfPersons personen.
+                </p>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+            </li>
+        }
+    }
+    else
+    {
+        <p style="text-align:center;"><strong>U heeft nog geen restaurant reserveringen</strong></p>
+    }
+
+}
+
+@helper NotificationTaxiBlock(int UserId)
+{
+
+    TaxiReservationQuerys querys = new TaxiReservationQuerys();
+
+    UserInfoQuerys uquerys = new UserInfoQuerys();
+
+    var uInfo = uquerys.GetUserInfo(UserId.ToString());
+
+    List<TaxiReservation> reservations = querys.GetAllReservationsFromUser(uInfo.Id);
+
+    if (reservations.Count != 0)
+    {
+    foreach (TaxiReservation reservation in reservations)
+    {
+            <li class="collection-item avatar">
+                <i class="material-icons circle green">directions_car</i>
+                <span class="title">U heeft een taxi reservering bij: Taxi @reservation.TaxiCompanyId</span>
+                <p>
+                    U wordt opgehaald om: @reservation.Date.
+                </p>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+            </li>
+        }
+    }
+    else
+    {
+        <p style="text-align:center;"><strong>U heeft nog geen taxi reserveringen</strong></p>
+    }
+
+}
+
+@helper NotificationRestaurantOwnerBlock(int ownerId)
+{
+
+    RestaurantReservationQuerys querys = new RestaurantReservationQuerys();
+
+    RestaurantQuerys rquerys = new RestaurantQuerys();
+
+    var restaurantData = rquerys.GetRestaurantByOwnerId(ownerId);
+
+    List<RestaurantReservation> reservations = querys.GetAllReservationsFromRestaurant(restaurantData.Id);
+
+    if (reservations.Count != 0)
+    {
+        foreach (RestaurantReservation reservation in reservations)
+        {
+            <li class="collection-item avatar">
+                <i class="material-icons circle green">restaurant</i>
+                <span class="title">Er is een nieuwe reservering geplaatst.</span>
+                <p>
+                    Reservering voor @reservation.AmountOfPersons personen, op de datum @reservation.Date.
+                </p>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+            </li>
+        }
+    }
+    else
+    {
+        <p style="text-align:center;"><strong>U heeft nog geen restaurant reserveringen</strong></p>
+    }
+
+}
+
+@helper NotificationTaxiOwnerBlock(int ownerId)
+{
+
+    TaxiReservationQuerys querys = new TaxiReservationQuerys();
+
+    TaxiCompanyQuerys tquerys = new TaxiCompanyQuerys();
+
+    var taxiData = tquerys.GetTaxiCompanyByOwnerId(ownerId);
+
+    List<TaxiReservation> reservations = querys.GetAllReservationsFromTaxiCompany(taxiData.Id);
+
+    if (reservations.Count != 0)
+    {
+        foreach (TaxiReservation reservation in reservations)
+        {
+            <li class="collection-item avatar">
+                <i class="material-icons circle green">directions_car</i>
+                <span class="title">Er is een nieuwe reservering geplaatst.</span>
+                <p>
+                    Reservering voor @reservation.Date.
+                </p>
+                @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
+            </li>
+        }
+    }
+    else
+    {
+        <p style="text-align:center;"><strong>U heeft nog geen taxi reserveringen</strong></p>
+    }
+
+}
