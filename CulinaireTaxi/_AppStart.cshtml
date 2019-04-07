@@ -1,5 +1,4 @@
-﻿@using System.Web.Http;
-@{
+﻿@{ 
     WebSecurity.InitializeDatabaseConnection("Database", "UserProfile", "UserId", "Email", autoCreateTables: true);
 
     // To let users of this site log in using their accounts from other sites such as Microsoft, Facebook, Twitter,
@@ -26,10 +25,4 @@
     //WebMail.From = "your-name-here@example.com";
 
     // To learn how to optimize scripts and stylesheets in your site go to https://go.microsoft.com/fwlink/?LinkID=248973
-
-    System.Web.Routing.RouteTable.Routes.MapHttpRoute(
-           name: "DefaultApi",
-           routeTemplate: "api/{controller}/{id}",
-           defaults: new { id = System.Web.Http.RouteParameter.Optional }
-       );
 }
