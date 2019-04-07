@@ -20,14 +20,14 @@ namespace Querys
         /// <param name="City">city</param>
         /// <param name="Description">description</param>
         public void AddRestaurant(int OwnerId, string RestaurantName, string PostalCode, string HouseNumber,
-            string HouseNumberPrefix, string City, string Description)
+            string HouseNumberPrefix, string City, string Description, string StreetName)
         {
             Database db = Database.Open(DatabaseName);
             string insertCommand =
-                "INSERT INTO Restaurant (OwnerId,RestaurantName,PostalCode,HouseNumber,HouseNumberPrefix,City,Description,HasBeenValidated) "
+                "INSERT INTO Restaurant (OwnerId,RestaurantName,PostalCode,HouseNumber,HouseNumberPrefix,City,Description,HasBeenValidated,StreetName) "
                 + "VALUES(@0,@1,@2,@3,@4,@5,@6,@7)";
             db.QuerySingle(insertCommand, OwnerId, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City,
-                Description, 0);
+                Description, 0, StreetName);
             db.Close();
         }
 
@@ -42,7 +42,7 @@ namespace Querys
             string insertCommand = "SELECT * FROM Restaurant WHERE Id = @0";
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
-            var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode, row.HouseNumber,
+            var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode, row.HouseNumber,
                 row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
             return restaurant;
         }
@@ -61,7 +61,7 @@ namespace Querys
             if (row == null) return null;
             else
             {
-                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
                 return restaurant;
             }
@@ -95,7 +95,7 @@ namespace Querys
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var row in rows)
             {
-                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
                 restaurants.Add(restaurant);
             }
@@ -116,7 +116,7 @@ namespace Querys
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var row in rows)
             {
-                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
                 restaurants.Add(restaurant);
             }
@@ -137,7 +137,7 @@ namespace Querys
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var row in rows)
             {
-                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
                 restaurants.Add(restaurant);
             }
@@ -158,7 +158,7 @@ namespace Querys
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var row in rows)
             {
-                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.StreetName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
                 restaurants.Add(restaurant);
             }
@@ -188,9 +188,9 @@ namespace Querys
         {
             Database db = Database.Open(DatabaseName);
             var dbCommand =
-                "UPDATE Restaurant SET RestaurantName = @1, PostalCode = @2, HouseNumber = @3, HouseNumberPrefix = @4, City = @5 WHERE Id = @0";
+                "UPDATE Restaurant SET RestaurantName = @1, PostalCode = @2, HouseNumber = @3, HouseNumberPrefix = @4, City = @5, StreetName = @6 WHERE Id = @0";
             db.QuerySingle(dbCommand, restaurant.Id, restaurant.RestaurantName, restaurant.PostalCode,
-                restaurant.HouseNumber, restaurant.HouseNumberPrefix, restaurant.City);
+                restaurant.HouseNumber, restaurant.HouseNumberPrefix, restaurant.City, restaurant.StreetName);
             db.Close();
             return restaurant;
         }

@@ -17,6 +17,7 @@
     var HouseNumberPrefix = "";
     var City = "";
     var Description = "";
+    var StreetName = "";
 
     RestaurantQuerys test = new RestaurantQuerys();
 
@@ -34,6 +35,8 @@
         HouseNumber = currentRestaurantInfo.HouseNumber.ToString();
         HouseNumberPrefix = currentRestaurantInfo.HouseNumberPrefix;
         City = currentRestaurantInfo.City;
+        Description = currentRestaurantInfo.Description;
+        StreetName = currentRestaurantInfo.StreetName;
     }
 
     if (IsPost)
@@ -44,6 +47,7 @@
         Validation.RequireField("restaurant-housenumber", "Voer een huisnummer in");
         Validation.RequireField("restaurant-city", "Voer de locatie in");
         Validation.RequireField("restaurant-description", "Voer een descriptie in");
+        Validation.RequireField("restaurant-streetname", "Voer een descriptie in");
 
         RestaurantName = Request.Form["restaurant-name"];
         PostalCode = Request.Form["restaurant-postalcode"];
@@ -51,15 +55,16 @@
         HouseNumberPrefix = Request.Form["restaurant-housenumberprefix"];
         City = Request.Form["restaurant-city"];
         Description = Request.Form["restaurant-description"];
+        StreetName = Request.Form["restaurant-streetname"];
 
         if (RestaurantValidated)
         {
-            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description, 3);
+            Restaurant newRestaurantInfo = new Restaurant(currentRestaurantInfo.Id, WebSecurity.CurrentUserId, RestaurantName, StreetName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description, 3);
             test.EditRestaurant(newRestaurantInfo);
             Response.Redirect("~/");
         }
 
-        test.AddRestaurant(WebSecurity.CurrentUserId, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description);
+        test.AddRestaurant(WebSecurity.CurrentUserId, StreetName, RestaurantName, PostalCode, HouseNumber, HouseNumberPrefix, City, Description);
 
         Response.Redirect("~/");
     }
@@ -97,9 +102,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s4">
-                                        <input placeholder="Straatnaam" ame="restaurant-streetname" type="text" class="validate"> 
+                                        <input placeholder="Straatnaam" name="restaurant-streetname" type="text" class="validate" value="@StreetName"> 
                                         <label required for="password">Straatnaam</label>
-                                        @*@Html.ValidationMessage("restaurant-streetname")*@
+                                        @Html.ValidationMessage("restaurant-streetname")
                                     </div>
                                     <div class="input-field col s3">
                                         <input required placeholder="Postcode" name="restaurant-postalcode" type="text" class="validate" value="@PostalCode">
@@ -120,7 +125,7 @@
                                     <div class="input-field col s12">
                                         <textarea required name="restaurant-description" placeholder="Voer hier een descriptie in." id="textarea2" class="materialize-textarea" data-length="160">@Description</textarea>
                                         <label for="textarea2">Voer een beschrijving in</label>
-                                        @*@Html.ValidationMessage("restaurant-description")*@
+                                        @Html.ValidationMessage("restaurant-description")
                                     </div>
                                 </div>
                                 <div class="card-action">

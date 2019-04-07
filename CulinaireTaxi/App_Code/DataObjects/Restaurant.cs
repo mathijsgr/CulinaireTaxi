@@ -23,6 +23,11 @@
         /// <summary>
         /// postal code
         /// </summary>
+        public string StreetName { get; private set; }
+
+        /// <summary>
+        /// postal code
+        /// </summary>
         public string PostalCode { get; private set; }
 
         /// <summary>
@@ -62,12 +67,13 @@
         /// <param name="City">city</param>
         /// <param name="Description">description</param>
         /// <param name="HasBeenValidated">has been validated</param>
-        public Restaurant(int Id, int OwnerId, string RestaurantName, string PostalCode, string HouseNumber,
+        public Restaurant(int Id, int OwnerId, string RestaurantName, string StreetName, string PostalCode, string HouseNumber,
             string HouseNumberPrefix, string City, string Description, int HasBeenValidated)
         {
             this.Id = Id;
             this.OwnerId = OwnerId;
             this.RestaurantName = RestaurantName;
+            this.StreetName = StreetName;
             this.PostalCode = PostalCode;
             this.HouseNumber = HouseNumber;
             this.HouseNumberPrefix = HouseNumberPrefix;
