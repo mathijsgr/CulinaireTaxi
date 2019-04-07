@@ -18,15 +18,16 @@
 
     if (userRole == 2)
     {
-        TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
-        var taxiData = tQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
-        contractsData = contractQuery.GetContractsFromTaxiCompany(taxiData.Id);
-    }
-    else if (userRole == 3)
-    {
         RestaurantQuerys rQuery = new RestaurantQuerys();
         var restaurantData = rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId);
         contractsData = contractQuery.GetContractsFromRestaurant(restaurantData.Id);
+    }
+    else if (userRole == 3)
+    {
+        TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
+        var taxiData = tQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
+        contractsData = contractQuery.GetContractsFromTaxiCompany(taxiData.Id);
+
 
     }
 

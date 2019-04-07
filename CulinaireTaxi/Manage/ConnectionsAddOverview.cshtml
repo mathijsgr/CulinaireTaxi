@@ -25,14 +25,14 @@
     var taxiContractsData = new List<TaxiRestaurantContract>();
     var restaurantContractsData = new List<TaxiRestaurantContract>();
 
-    if (userRole == 3)
+    if (userRole == 2)
     {
         taxiData = tQuery.GetAllCompanies();
         var ownedRestaurantData = rQuery.GetRestaurantByOwnerId(WebSecurity.CurrentUserId);
         restaurantContractsData = contractQuery.GetContractsFromTaxiCompany(ownedRestaurantData.Id);
 
     }
-    else if (userRole == 2)
+    else if (userRole == 3)
     {
         restaurantData = rQuery.GetAllRestaurants();
         var ownedTaxiData = tQuery.GetTaxiCompanyByOwnerId(WebSecurity.CurrentUserId);
@@ -56,31 +56,17 @@
                         <div class="col s12 center" style="margin-bottom:20px;">
                             @if (userRole == 2)
                             {
-                                <h5>Alle beschikbare restauranten</h5>
+                                <h5>Alle beschikbare taxibedrijven</h5>
                             }
                             else
                             {
-                                <h5>Alle beschikbare taxibedrijven</h5>
+                                <h5>Alle beschikbare restauranten</h5>
                             }
                         </div>
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
                                     @if (userRole == 2)
-                                    {
-                                        foreach (var data in restaurantData)
-                                        {
-                                            <li class="collection-item avatar">
-                                                <i class="material-icons circle black">restaurant</i>
-                                                <span class="title">Restaurant naam: @data.RestaurantName</span>
-                                                <p>
-                                                    Locatie bedrijf: @data.City.
-                                                </p>
-                                                <a href="~/Manage/ConnectionsAddRestaurant?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                            </li>
-                                        }
-                                    }
-                                    else
                                     {
                                         foreach (var data in taxiData)
                                         {
@@ -93,6 +79,21 @@
                                                 <a href="~/Manage/ConnectionsAddTaxi?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
                                             </li>
                                         }
+                                    }
+                                    else
+                                    {
+                                        foreach (var data in restaurantData)
+                                        {
+                                            <li class="collection-item avatar">
+                                                <i class="material-icons circle black">restaurant</i>
+                                                <span class="title">Restaurant naam: @data.RestaurantName</span>
+                                                <p>
+                                                    Locatie bedrijf: @data.City.
+                                                </p>
+                                                <a href="~/Manage/ConnectionsAddRestaurant?company=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                            </li>
+                                        }
+
                                     }
                                 </ul>
                             </div>
