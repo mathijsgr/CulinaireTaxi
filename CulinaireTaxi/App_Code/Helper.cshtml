@@ -8,35 +8,68 @@
 
     List<Restaurant> restaurants = querys.GetAllRestaurants();
 
-    var result = restaurants
-        .Where(t =>
-            t.City.Equals(search) ||
-            t.PostalCode.Equals(search) ||
-            t.RestaurantName.Contains(search) ||
-            t.Description.Contains(search))
-        .ToList();
-
-    foreach (Restaurant res in result)
+    if (restaurants == null)
     {
-        <div class="col s2">
-            <div class="card medium">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/400x300">
-                    <span class="card-title">@res.RestaurantName</span>
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 center">
+                        <h3><i class="mdi-content-send brown-text"></i></h3>
+                        <h4>Zoek resultaten</h4>
+                    </div>
                 </div>
-                <div class="card-content">
-                    <p>
-                        Locatie: <br>
-                        @res.City <br>
-                        @res.PostalCode <br>
-                        @res.HouseNumber @res.HouseNumberPrefix <br>
-                        Extra informatie: <br>
-                        @res.Description <br>
+                <div>
+                    Geen resultaten
+                </div>
+            </div>
+        </div>
+}
+    else
+    {
+        var result = restaurants
+            .Where(t =>
+                t.City.Equals(search) ||
+                t.PostalCode.Equals(search) ||
+                t.RestaurantName.Contains(search) ||
+                t.Description.Contains(search))
+            .ToList();
 
-                    </p>
+
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 center">
+                        <h3><i class="mdi-content-send brown-text"></i></h3>
+                        <h4>Zoek resultaten</h4>
+                    </div>
                 </div>
-                <div class="card-action">
-                    <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">shopping_cart</i>Reserveren</a>
+                <div class="row">
+                    @foreach (Restaurant res in result)
+                    {
+                        <div class="col m4">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="~/Assets/img/restaurant_stock.jpg">
+                                    <span class="card-title" style="width: 100%; background: rgba(0, 0, 0, 0.5);">@res.RestaurantName<i class="small material-icons right">star</i></span>
+                                </div>
+                                <div class="card-content">
+                                    <p>
+                                        Locatie: <br>
+                                        @res.City <br>
+                                        @res.PostalCode <br>
+                                        @res.HouseNumber @res.HouseNumberPrefix <br>
+                                        Extra informatie: <br>
+                                        @res.Description <br>
+
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">This is a link</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -56,26 +89,41 @@
             t.CompanyName.Contains(search))
         .ToList();
 
-    foreach (TaxiCompany company in result)
-    {
-        <div class="col s2">
-            <div class="card medium">
-                <div class="card-image">
-                    <img src="https://via.placeholder.com/400x300">
-                    <span class="card-title">@company.CompanyName</span>
-                </div>
-                <div class="card-content">
-                    <p>
-                        Locatie: <br>
-                        @company.CompanyLocation <br>
-                    </p>
-                </div>
-                <div class="card-action">
-                    <a class="waves-effect waves-light btn-small" href="#"><i class="material-icons left">shopping_cart</i>Reserveren</a>
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h3><i class="mdi-content-send brown-text"></i></h3>
+                    <h4>Zoek resultaten</h4>
                 </div>
             </div>
+            <div class="row">
+                @foreach (TaxiCompany company in result)
+                {
+                    <div class="col m4">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="~/Assets/img/restaurant_stock.jpg">
+                                <span class="card-title" style="width: 100%; background: rgba(0, 0, 0, 0.5);">@company.CompanyName<i class="small material-icons right">star</i></span>
+                            </div>
+                            <div class="card-content">
+                                <p>
+                                    Locatie: <br>
+                                    @company.CompanyLocation <br>
+                                    Extra informatie: <br>
+                                    @company.Description <br>
+                                </p>
+                            </div>
+                            <div class="card-action">
+                                <a href="#">This is a link</a>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    }
+    </div>
 }
 
 @helper NotificationRestaurantBlock(int UserId)
