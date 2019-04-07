@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-}
+    }
     else
     {
         var result = restaurants
@@ -83,47 +83,67 @@
 
     List<TaxiCompany> taxis = querys.GetAllCompanies();
 
-    var result = taxis
-        .Where(t =>
-            t.CompanyLocation.Equals(search) ||
-            t.CompanyName.Contains(search))
-        .ToList();
-
-    <div class="container">
-        <div class="section">
-            <div class="row">
-                <div class="col s12 center">
-                    <h3><i class="mdi-content-send brown-text"></i></h3>
-                    <h4>Zoek resultaten</h4>
+    if (taxis == null)
+    {
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 center">
+                        <h3><i class="mdi-content-send brown-text"></i></h3>
+                        <h4>Zoek resultaten</h4>
+                    </div>
+                </div>
+                <div>
+                    Geen resultaten
                 </div>
             </div>
-            <div class="row">
-                @foreach (TaxiCompany company in result)
-                {
-                    <div class="col m4">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="~/Assets/img/restaurant_stock.jpg">
-                                <span class="card-title" style="width: 100%; background: rgba(0, 0, 0, 0.5);">@company.CompanyName<i class="small material-icons right">star</i></span>
-                            </div>
-                            <div class="card-content">
-                                <p>
-                                    Locatie: <br>
-                                    @company.CompanyLocation <br>
-                                    Extra informatie: <br>
-                                    @company.Description <br>
-                                </p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">This is a link</a>
+        </div>
+    }
+    else
+    {
 
+        var result = taxis
+            .Where(t =>
+                t.CompanyLocation.Equals(search) ||
+                t.CompanyName.Contains(search))
+            .ToList();
+
+        <div class="container">
+            <div class="section">
+                <div class="row">
+                    <div class="col s12 center">
+                        <h3><i class="mdi-content-send brown-text"></i></h3>
+                        <h4>Zoek resultaten</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach (TaxiCompany company in result)
+                    {
+                        <div class="col m4">
+                            <div class="card">
+                                <div class="card-image">
+                                    <img src="~/Assets/img/restaurant_stock.jpg">
+                                    <span class="card-title" style="width: 100%; background: rgba(0, 0, 0, 0.5);">@company.CompanyName<i class="small material-icons right">star</i></span>
+                                </div>
+                                <div class="card-content">
+                                    <p>
+                                        Locatie: <br>
+                                        @company.CompanyLocation <br>
+                                        Extra informatie: <br>
+                                        @company.Description <br>
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">This is a link</a>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 
 @helper NotificationRestaurantBlock(int UserId)
