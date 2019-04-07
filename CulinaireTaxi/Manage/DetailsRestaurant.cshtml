@@ -6,7 +6,7 @@
 
     UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
 
-    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3)
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
     {
         Response.Redirect("~/");
     }

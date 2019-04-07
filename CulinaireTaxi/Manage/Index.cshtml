@@ -27,14 +27,15 @@
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    @if (userRole == 2 )
+                                    @if (userRole == 2)
                                     {
-                                        @Helper.NotificationTaxiOwnerBlock(WebSecurity.CurrentUserId)
+                                        @Helper.NotificationRestaurantOwnerBlock(WebSecurity.CurrentUserId)
+
 
                                     }
                                     else if (userRole == 3)
                                     {
-                                        @Helper.NotificationRestaurantOwnerBlock(WebSecurity.CurrentUserId)
+                                        @Helper.NotificationTaxiOwnerBlock(WebSecurity.CurrentUserId)
 
                                     }
                                 </ul>

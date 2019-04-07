@@ -6,13 +6,12 @@
 
     UserInfoQuerys userInfoQuerys = new UserInfoQuerys();
 
-    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 2)
+    if (!WebSecurity.IsAuthenticated || userInfoQuerys.GetUserRole(WebSecurity.CurrentUserId) != 3)
     {
         Response.Redirect("~/");
     }
 
     var TaxiName = "";
-    var PostalCode = "";
     var City = "";
     var Description = "";
 
@@ -40,7 +39,6 @@
         Validation.RequireField("taxi-description", "Voer een beschrijving in");
 
         TaxiName = Request.Form["taxi-name"];
-        PostalCode = Request.Form["taxi-postalcode"];
         City = Request.Form["taxi-city"];
         Description = Request.Form["taxi-description"];
 
@@ -85,13 +83,6 @@
                                         <input placeholder="Locatie" name="taxi-city" type="text" class="validate" value="@City">
                                         <label for="last_name">Locatie</label>
                                         @Html.ValidationMessage("taxi-city")
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s3">
-                                        <input placeholder="Postcode" name="taxi-postalcode" type="text" class="validate" value="@PostalCode">
-                                        <label for="password">Postcode</label>
-                                        @Html.ValidationMessage("taxi-postalcode")
                                     </div>
                                 </div>
                                 <div class="row">
