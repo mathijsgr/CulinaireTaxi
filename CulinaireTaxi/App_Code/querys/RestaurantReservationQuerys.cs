@@ -19,7 +19,7 @@ namespace Querys
         public void AddReservation(int RestaurantId, int UserInfoId, int AmountOfPersons, string Date, string Time)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "INSERT INTO RestaurantReservation (RestaurantId,UserInfoId,AmountOfPersons,Date) "
+            string insertCommand = "INSERT INTO RestaurantReservation (RestaurantId,UserInfoId,AmountOfPersons,Date,Time) "
                                    + "VALUES(@0,@1,@2,@3,@4)";
             db.QuerySingle(insertCommand, RestaurantId, UserInfoId, AmountOfPersons, Date, Time);
             db.Close();

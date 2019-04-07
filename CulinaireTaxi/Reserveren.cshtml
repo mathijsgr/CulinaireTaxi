@@ -22,7 +22,6 @@
 
     #endregion
 
-
     if (Request.QueryString.Count > 0)
     {
 
@@ -40,16 +39,12 @@
 
         }
     }
-
     if (IsPost)
     {
         reservationDate = Request.Form["reservationDate"];
         reservationTime = Request.Form["reservationTime"];
         amountOfPersons = Convert.ToInt32(Request.Form["amountOfPersons"]);
 
-        //<script type="text/javascript" language="javascript">
-        //    alert("RestaurantId" + RestaurantId + "CurrentUserId" + WebSecurity.CurrentUserId + "amountOfPersons" + amountOfPersons + "reservationTime" + reservationTime);
-        //</script>
 
         rRQuerys.AddReservation(RestaurantId, userInfoQuerys.GetUserInfo(WebSecurity.CurrentUserId.ToString()).Id, amountOfPersons, reservationDate, reservationTime);
     }
@@ -83,6 +78,7 @@
                                     <label>Aanstal personen</label>
                                     <input type="number" min="1" name="amountOfPersons" value="@amountOfPersons" />
 
+
                                     <form method="post">
                                         <input type="submit" class="btn btn-primary" value="Reserveer" />
                                     </form>
@@ -95,7 +91,6 @@
         </div>
 
     </div>
-
 
 
 
