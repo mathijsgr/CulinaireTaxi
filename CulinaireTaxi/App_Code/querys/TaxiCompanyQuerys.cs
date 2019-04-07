@@ -76,9 +76,16 @@ namespace Querys
             List<TaxiCompany> companies = new List<TaxiCompany>();
             foreach (var row in rows)
             {
-                var company = new TaxiCompany(row.Id, row.OwnerId, row.CompanyName, row.CompanyLocation,
-                    row.Description, row.HasBeenValidated);
-                companies.Add(company);
+                if (row.CompanyName == null)
+                {
+
+                }
+                else
+                {
+                    var company = new TaxiCompany(row.Id, row.OwnerId, row.CompanyName, row.CompanyLocation,
+                        row.Description, row.HasBeenValidated);
+                    companies.Add(company);
+                }
             }
 
             return companies;

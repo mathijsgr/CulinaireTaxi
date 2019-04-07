@@ -45,9 +45,10 @@ namespace Querys
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
 
-            UserInfo newUserInfo = new UserInfo(row.Id, row.UserId, row.FirstName, row.Prefix, row.LastName,
+                UserInfo newUserInfo = new UserInfo(row.Id, row.UserId, row.FirstName, row.Prefix, row.LastName,
                 row.PostalCode, row.HouseNumber, row.HouseNumberPrefix, row.City, row.Role);
-            return newUserInfo;
+                return newUserInfo;
+            
         }
 
         /// <summary>
