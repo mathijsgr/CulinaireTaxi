@@ -15,13 +15,13 @@ namespace Querys
         /// <param name="RestaurantId">restaurant id</param>
         /// <param name="UserInfoId">user info id</param>
         /// <param name="AmountOfPersons">number of persons</param>
-        /// <param name="Time">time</param>
-        public void AddReservation(int RestaurantId, int UserInfoId, int AmountOfPersons, string Time)
+        /// <param name="Date">time</param>
+        public void AddReservation(int RestaurantId, int UserInfoId, int AmountOfPersons, string Date, string Time)
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "INSERT INTO RestaurantReservation (RestaurantId,UserInfoId,AmountOfPersons,Time) "
-                                   + "VALUES(@0,@1,@2)";
-            db.QuerySingle(insertCommand, RestaurantId, UserInfoId, AmountOfPersons, Time);
+            string insertCommand = "INSERT INTO RestaurantReservation (RestaurantId,UserInfoId,AmountOfPersons,Date) "
+                                   + "VALUES(@0,@1,@2,@3,@4)";
+            db.QuerySingle(insertCommand, RestaurantId, UserInfoId, AmountOfPersons, Date, Time);
             db.Close();
         }
 
