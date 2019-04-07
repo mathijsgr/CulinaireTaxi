@@ -95,16 +95,9 @@ namespace Querys
             List<Restaurant> restaurants = new List<Restaurant>();
             foreach (var row in rows)
             {
-                if (row.RestaurantName == null)
-                {
-
-                }
-                else
-                {
-                    var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
+                var restaurant = new Restaurant(row.Id, row.OwnerId, row.RestaurantName, row.PostalCode,
                     row.HouseNumber, row.HouseNumberPrefix, row.City, row.Description, row.HasBeenValidated);
-                    restaurants.Add(restaurant);
-                }
+                restaurants.Add(restaurant);
             }
 
             return restaurants;
