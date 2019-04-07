@@ -1,18 +1,11 @@
-﻿@using Querys;
-@{
+﻿@{
     Layout = "~/Shared/_Layout.cshtml";
     Page.Title = "About";
-
-    RestaurantQuerys rQuery = new RestaurantQuerys();
-    var restaurants = rQuery.GetAllRestaurants();
-
-    TaxiCompanyQuerys tQuery = new TaxiCompanyQuerys();
-    var taxis = tQuery.GetAllCompanies();
 }
 
 <main>
     <div id="index-banner" class="parallax-container">
-        <div class="parallax"><img src="~/Assets/img/background1.jpg"></div>
+        <div class="parallax"><img src="~/Assets/img/background1.jpg" alt="Unsplashed background img 1"></div>
     </div>
 
     <div class="container">
@@ -24,31 +17,98 @@
                 </div>
             </div>
             <div class="row">
-                @foreach (var restaurant in restaurants.Take(6))
-                {
                 <div class="col m4">
                     <div class="card">
                         <div class="card-image">
                             <img src="~/Assets/img/restaurant_stock.jpg">
-                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">@restaurant.RestaurantName<i class="small material-icons right">star</i></span>
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
                         </div>
                         <div class="card-content">
-                            <p>@restaurant.Description</p>
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Reserveren</a>
+                            <a href="#">This is a link</a>
 
                         </div>
                     </div>
                 </div>
-                }
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/restaurant_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/restaurant_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/restaurant_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/restaurant_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/restaurant_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Restaurant naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
     <div class="parallax-container valign-wrapper">
-        <div class="parallax"><img src="~/Assets/img/background2.jpg"></div>
+        <div class="parallax"><img src="~/Assets/img/background2.jpg" alt="Unsplashed background img 2"></div>
     </div>
     <div class="container">
         <div class="section">
@@ -59,28 +119,53 @@
                 </div>
             </div>
             <div class="row">
-                @foreach (var taxi in taxis.Take(6))
-                {
-                    <div class="col m4">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="~/Assets/img/taxi_stock.jpg">
-                                <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">@taxi.CompanyName<i class="small material-icons right">star</i></span>
-                            </div>
-                            <div class="card-content">
-                                <p>@taxi.Description</p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">Reserveren</a>
-                            </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/taxi_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Taxi naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
                         </div>
                     </div>
-                }
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/taxi_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Taxi naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m4">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="~/Assets/img/taxi_stock.jpg">
+                            <span class="card-title" style="width:100%; background: rgba(0, 0, 0, 0.5);">Taxi naam<i class="small material-icons right">star</i></span>
+                        </div>
+                        <div class="card-content">
+                            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                            <a href="#">This is a link</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="parallax-container valign-wrapper">
-        <div class="parallax"><img src="~/Assets/img/background3.jpg"></div>
+        <div class="parallax"><img src="~/Assets/img/background3.jpg" alt="Unsplashed background img 3"></div>
     </div>
 </main>

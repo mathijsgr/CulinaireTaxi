@@ -70,7 +70,7 @@ namespace Querys
         public List<TaxiCompany> GetAllCompanies()
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM TaxiCompany WHERE HasBeenValidated = 3";
+            string insertCommand = "SELECT * FROM TaxiCompany";
             var rows = db.Query(insertCommand);
             db.Close();
             List<TaxiCompany> companies = new List<TaxiCompany>();

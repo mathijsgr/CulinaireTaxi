@@ -89,7 +89,7 @@ namespace Querys
         public List<Restaurant> GetAllRestaurants()
         {
             Database db = Database.Open(DatabaseName);
-            string insertCommand = "SELECT * FROM Restaurant WHERE HasBeenValidated = 3";
+            string insertCommand = "SELECT * FROM Restaurant";
             var rows = db.Query(insertCommand);
             db.Close();
             List<Restaurant> restaurants = new List<Restaurant>();

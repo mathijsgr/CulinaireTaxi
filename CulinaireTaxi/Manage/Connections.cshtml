@@ -43,23 +43,16 @@
                         <div class="row">
                             <div id="test1" class="col s12 left">
                                 <ul class="collection">
-                                    @if (contractsData.Count == 0)
+                                    @foreach (var data in contractsData)
                                     {
-                                        <p style="text-align:center;"><strong>U heeft nog geen connecties gemaakt</strong></p>
-                                    }
-                                    else
-                                    {
-                                        foreach (var data in contractsData)
-                                        {
-                                            <li class="collection-item avatar">
-                                                <i class="material-icons circle black">assignment</i>
-                                                <span class="title">Contract met @data.RestaurantId</span>
-                                                <p>
-                                                    Uw contract met bedrijf.
-                                                </p>
-                                                <a href="~/Manage/ConnectionsDetails?contract=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
-                                            </li>
-                                        }
+                                        <li class="collection-item avatar">
+                                            <i class="material-icons circle black">assignment</i>
+                                            <span class="title">Contract met @data.RestaurantId</span>
+                                            <p>
+                                                Uw contract met bedrijf.
+                                            </p>
+                                            <a href="~/Manage/ConnectionsDetails?contract=@data.Id" class="secondary-content"><i class="small material-icons">forward</i></a>
+                                        </li>
                                     }
                                 </ul>
                             </div>

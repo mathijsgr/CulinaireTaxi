@@ -34,7 +34,7 @@
         var City = Request.Form["userinfo-city"];
 
 
-        UserInfo userInfo = new UserInfo(CurrentUserInfo.Id, WebSecurity.CurrentUserId, FirstName, Prefix, LastName, PostalCode, HouseNumber , HouseNumberPrefix, City, CurrentUserInfo.Role);
+        UserInfo userInfo = new UserInfo(CurrentUserInfo.Id, WebSecurity.CurrentUserId, FirstName, Prefix, LastName, PostalCode, Convert.ToInt32(HouseNumber) , HouseNumberPrefix, City, CurrentUserInfo.Role);
 
         userinfoquery.EditUserInfo(userInfo);
 

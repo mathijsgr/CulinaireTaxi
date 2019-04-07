@@ -38,7 +38,7 @@
         /// <summary>
         /// house number
         /// </summary>
-        public string HouseNumber { get; private set; }
+        public int HouseNumber { get; private set; }
 
         /// <summary>
         /// house number prefix
@@ -70,7 +70,7 @@
         /// <param name="City">city</param>
         /// <param name="Role">role</param>
         public UserInfo(int Id, int UserId, string FirstName, string Prefix, string LastName, string PostalCode,
-            string HouseNumber, string HouseNumberPrefix, string City, int Role)
+            int HouseNumber, string HouseNumberPrefix, string City, int Role)
         {
             this.Id = Id;
             this.UserId = UserId;
