@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Shared/_Layout.cshtml";
+    Page.Title = "Restuarant info";
+
+    string companyId = Request.QueryString["taxi"];
+        var reservationDate = "";
+
+    Querys.UserInfoQuerys userInfoQuerys = new Querys.UserInfoQuerys();
+    Querys.TaxiCompanyQuerys tcompanyQuerys = new Querys.TaxiCompanyQuerys();
+    Querys.TaxiReservationQuerys treservationQuerys = new Querys.TaxiReservationQuerys();
+
+    if (!WebSecurity.IsAuthenticated || companyId == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    var currentUserInfo = userInfoQuerys.GetUserInfo(Convert.ToString(WebSecurity.CurrentUserId));
+    var currentTaxiInfo = tcompanyQuerys.GetTaxiCompany(int.Parse(companyId));
+
+    if (currentTaxiInfo == null)
+    {
+        Response.Redirect("~/");
+    }
+
+    if (IsPost)
+    {
+        reservationDate = Request.Form["reservationDate"];
+        treservationQuerys.AddReservation(currentTaxiInfo.Id, currentUserInfo.Id, reservationDate);
+        Response.Redirect("~/TaxiReservation/Complete");
+    }
+}
+
+
+<main>
+    <div id="index-banner" class="parallax-container">
+        <div class="parallax"><img src="~/Assets/img/background1.jpg" alt="Unsplashed background img 1"></div>
+    </div>
+
+
+    <div class="container">
+        <div class="section">
+            <div class="row">
+                <div class="col s12 center">
+                    <h3><i class="mdi-content-send brown-text"></i></h3>
+                    <div class="col s12 m20">
+                        <h2 class="header">Taxibedrijf: @currentTaxiInfo.CompanyName.</h2>
+                        <div class="card horizontal">
+                            <div class="card-image">
+                                <img src="~/Assets/img/taxi_stock.jpg">
+                            </div>
+                            <div class="card-stacked">
+                                <p>Adres: @currentTaxiInfo.CompanyLocation</p>
+                                <div class="card-action">
+                                    <form method="post">
+                                        <label>Reserverings Datum</label>
+                                        <input required class="datepicker" name="reservationDate" value="@reservationDate" />
+
+                                        <input type="submit" class="btn btn-primary" value="Reserveer" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="parallax-container valign-wrapper">
+        <div class="parallax"><img src="~/Assets/img/background2.jpg" alt="Unsplashed background img 2"></div>
+    </div>
+
+</main>
