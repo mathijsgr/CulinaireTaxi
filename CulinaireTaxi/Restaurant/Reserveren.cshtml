@@ -53,12 +53,13 @@
     }
     if (IsPost)
     {
+        var currentUser = userInfoQuerys.GetUserInfo(WebSecurity.CurrentUserId.ToString());
         reservationDate = Request.Form["reservationDate"];
         reservationTime = Request.Form["reservationTime"];
-        amountOfPersons = Convert.ToInt32(Request.Form["amountOfPersons"]);
+        amountOfPersons = Request.Form["amountOfPersons"].AsInt();
         type = Int32.Parse(Request.Form["type"]);
 
-        rRQuerys.AddReservation(RestaurantId, userInfoQuerys.GetUserInfo(WebSecurity.CurrentUserId.ToString()).Id, amountOfPersons, reservationDate, reservationTime);
+        rRQuerys.AddReservation(RestaurantId, currentUser.Id, amountOfPersons, reservationDate, reservationTime);
 
         if (type != 0)
         {
@@ -71,7 +72,7 @@
 
         }
 
-    }
+    }    
 }
 
 
@@ -97,11 +98,11 @@
                                 <div class="card-action">
                                     <form method="post">
                                         <label>Datum</label>
-                                        <input required class="datepicker" name="reservationDate" value="@reservationDate" />
+                                        <input required class="datepicker" name="reservationDate"/>
                                         <label>Tijdstip</label>
-                                        <input required class="timepicker" type="text" name="reservationTime" value="@reservationTime" placeholder="--:--" />
+                                        <input required class="timepicker" type="text" name="reservationTime" placeholder="--:--" />
                                         <label>Aanstal personen</label>
-                                        <input type="number" min="1" name="amountOfPersons" value="@amountOfPersons" />
+                                        <input type="number" min="1" name="amountOfPersons" value="1"/>
                                         <label>Automatisch taxi reserveren?</label>
                                         <select id="type" name="type">
                                             <option value="0" selected>Geen taxi</option>
