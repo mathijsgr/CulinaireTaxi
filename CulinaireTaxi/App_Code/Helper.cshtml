@@ -151,6 +151,8 @@
 
     RestaurantReservationQuerys querys = new RestaurantReservationQuerys();
 
+    RestaurantQuerys rquerys = new RestaurantQuerys();
+
     UserInfoQuerys uquerys = new UserInfoQuerys();
 
     var uInfo = uquerys.GetUserInfo(UserId.ToString());
@@ -161,11 +163,13 @@
     {
         foreach (RestaurantReservation reservation in reservations)
         {
+            var tempData = rquerys.GetRestaurant(reservation.RestaurantId);
+
             <li class="collection-item avatar">
                 <i class="material-icons circle green">restaurant</i>
-                <span class="title">U heeft een restaurant reservering bij: Restaurant @reservation.RestaurantId</span>
+                <span class="title">U heeft een restaurant reservering bij: Restaurant @tempData.RestaurantName</span>
                 <p>
-                    U heeft een reservering voor @reservation.AmountOfPersons personen.
+                    U heeft een reservering voor @reservation.AmountOfPersons personen. Op de datum: @reservation.Date om @reservation.Time.
                 </p>
                 @*<a href="" class="secondary-content"><i class="small material-icons">forward</i></a>*@
             </li>
@@ -183,6 +187,8 @@
 
     TaxiReservationQuerys querys = new TaxiReservationQuerys();
 
+    TaxiCompanyQuerys tquerys = new TaxiCompanyQuerys();
+
     UserInfoQuerys uquerys = new UserInfoQuerys();
 
     var uInfo = uquerys.GetUserInfo(UserId.ToString());
@@ -193,9 +199,11 @@
     {
         foreach (TaxiReservation reservation in reservations)
         {
+            var tempData = tquerys.GetTaxiCompany(reservation.TaxiCompanyId);
+
             <li class="collection-item avatar">
                 <i class="material-icons circle green">directions_car</i>
-                <span class="title">U heeft een taxi reservering bij: Taxi @reservation.TaxiCompanyId</span>
+                <span class="title">U heeft een taxi reservering bij: Taxi @tempData.CompanyName</span>
                 <p>
                     U wordt opgehaald om: @reservation.Date.
                 </p>
