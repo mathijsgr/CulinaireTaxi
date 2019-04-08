@@ -4,28 +4,40 @@
 
     WebSecurity.RequireAuthenticatedUser();
 
+    string companyId = Request.QueryString["r"];
+
     int RestaurantId = 0;
     var RestaurantName = "Restaurant titel";
     var PostalCode = "12345AB";
     var HouseNumber = "1";
     var City = "Bikinibroek";
 
+    int type = 0;
+
     int amountOfPersons = 1;
     string reservationDate = "Datum";
     string reservationTime = "";
+
 
     #region Querys
 
     Querys.UserInfoQuerys userInfoQuerys = new Querys.UserInfoQuerys();
     Querys.RestaurantQuerys rQuerys = new Querys.RestaurantQuerys();
     Querys.RestaurantReservationQuerys rRQuerys = new Querys.RestaurantReservationQuerys();
+    Querys.TaxiReservationQuerys tRQuerys = new Querys.TaxiReservationQuerys();
+    Querys.TaxiCompanyQuerys tQuerys = new Querys.TaxiCompanyQuerys();
+
+    Querys.TaxiRestaurantContractQuerys cQuerys = new Querys.TaxiRestaurantContractQuerys();
+
+    var contractedTaxis = cQuerys.GetContractsFromRestaurant(int.Parse(companyId));
+
 
     #endregion
 
     if (Request.QueryString.Count > 0)
     {
 
-        var currentRestaurantInfo = rQuerys.GetRestaurant(int.Parse(Request.QueryString["r"]));
+        var currentRestaurantInfo = rQuerys.GetRestaurant(int.Parse(companyId));
 
 
         if (currentRestaurantInfo != null)
@@ -44,9 +56,21 @@
         reservationDate = Request.Form["reservationDate"];
         reservationTime = Request.Form["reservationTime"];
         amountOfPersons = Convert.ToInt32(Request.Form["amountOfPersons"]);
-
+        type = Int32.Parse(Request.Form["type"]);
 
         rRQuerys.AddReservation(RestaurantId, userInfoQuerys.GetUserInfo(WebSecurity.CurrentUserId.ToString()).Id, amountOfPersons, reservationDate, reservationTime);
+
+        if (type != 0)
+        {
+            tRQuerys.AddReservation(type, userInfoQuerys.GetUserInfo(WebSecurity.CurrentUserId.ToString()).Id, reservationDate);
+            Response.Redirect("~/TaxiReservation/Complete");
+        }
+        else
+        {
+            Response.Redirect("~/TaxiReservation/Complete");
+
+        }
+
     }
 }
 
@@ -71,15 +95,24 @@
                             <div class="card-stacked">
                                 <p>Adres: @PostalCode, @HouseNumber, @City</p>
                                 <div class="card-action">
-                                    <label>Datum</label>
-                                    <input required class="datepicker" name="reservationDate" value="@reservationDate" />
-                                    <label>Tijdstip</label>
-                                    <input required class="timepicker" type="text" name="reservationTime" value="@reservationTime" placeholder="--:--" />
-                                    <label>Aanstal personen</label>
-                                    <input type="number" min="1" name="amountOfPersons" value="@amountOfPersons" />
-
-
                                     <form method="post">
+                                        <label>Datum</label>
+                                        <input required class="datepicker" name="reservationDate" value="@reservationDate" />
+                                        <label>Tijdstip</label>
+                                        <input required class="timepicker" type="text" name="reservationTime" value="@reservationTime" placeholder="--:--" />
+                                        <label>Aanstal personen</label>
+                                        <input type="number" min="1" name="amountOfPersons" value="@amountOfPersons" />
+                                        <label>Automatisch taxi reserveren?</label>
+                                        <select id="type" name="type">
+                                            <option value="0" selected>Geen taxi</option>
+                                            @foreach (var taxicontract in contractedTaxis)
+                                            {
+                                                var taxiding = tQuerys.GetTaxiCompany(taxicontract.TaxiCompanyId);
+
+                                                <option value="@taxiding.Id">Taxibedrijf: @taxiding.CompanyName</option>
+
+                                            }
+                                        </select>
                                         <input type="submit" class="btn btn-primary" value="Reserveer" />
                                     </form>
                                 </div>
@@ -91,6 +124,8 @@
         </div>
 
     </div>
+
+
 
 
 
