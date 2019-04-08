@@ -37,7 +37,7 @@ namespace Querys
             var row = db.QuerySingle(insertCommand, Id);
             db.Close();
             var reservering =
-                new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date);
+                new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId, row.AmountOfPerons, row.Date, row.Time);
             return reservering;
         }
 
@@ -56,7 +56,7 @@ namespace Querys
             foreach (var row in rows)
             {
                 var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId,
-                    row.AmountOfPersons, row.Date);
+                    row.AmountOfPersons, row.Date, row.Time);
                 reserveringen.Add(reservering);
             }
 
@@ -78,7 +78,7 @@ namespace Querys
             foreach (var row in rows)
             {
                 var reservering = new RestaurantReservation(row.Id, row.RestaurantId, row.UserInfoId,
-                    row.AmountOfPersons, row.Date);
+                    row.AmountOfPersons, row.Date, row.Time);
                 reserveringen.Add(reservering);
             }
 

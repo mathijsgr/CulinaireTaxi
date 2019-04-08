@@ -26,9 +26,14 @@
         public int AmountOfPersons { get; private set; }
 
         /// <summary>
-        /// time of reservation
+        /// date of reservation
         /// </summary>
         public string Date { get; private set; }
+
+        /// <summary>
+        /// time of reservation
+        /// </summary>
+        public string Time { get; private set; }
 
         /// <summary>
         /// constructor for restaurant reservation
@@ -38,13 +43,14 @@
         /// <param name="UserInfoId">user info id</param>
         /// <param name="AmountOfPersons">amount of persons</param>
         /// <param name="Date">Date</param>
-        public RestaurantReservation(int Id, int RestaurantId,int UserInfoId, int AmountOfPersons, string Date)
+        public RestaurantReservation(int Id, int RestaurantId,int UserInfoId, int AmountOfPersons, string Date, string Time)
         {
             this.Id = Id;
             this.RestaurantId = RestaurantId;
             this.UserInfoId = UserInfoId;
             this.AmountOfPersons = AmountOfPersons;
             this.Date = Date;
+            this.Time = Time;
         }
     }
 }
